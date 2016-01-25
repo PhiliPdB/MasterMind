@@ -7,7 +7,6 @@
 	<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-	
 
 	<!-- Include scripts -->
 	<script src="js/script.js" type="text/javascript" charset="utf-8" async defer></script>

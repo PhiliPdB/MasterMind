@@ -1,0 +1,2 @@
+# MasterMind
+School assignment

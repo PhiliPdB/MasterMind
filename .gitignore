@@ -1,0 +1,7 @@
+# Ignore generated css
+css/
+css/*
+
+# Ignore node_modules
+node_modules/
+node_modules/*

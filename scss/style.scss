@@ -1,13 +1,4 @@
-// All the 8 colors you can choose
-// red, green, blue, yellow, orange, pink, white, black
-$red:  #f44336;
-$green: #4caf50;
-$blue: #2196f3;
-$yellow: #ffeb3b;
-$orange: #ff9800;
-$pink: #e91e63;
-$white: #ffffff;
-$black: #000000;
+@import 'variables';
 
 body, html {
 	margin: 0;
@@ -15,9 +6,11 @@ body, html {
 
 #board {
 	height: 100vh;
+	width: $board_width;
+	margin: 0 auto;
 
 	.row {
-		width: 60vw;
+		width: $board_width;
 		margin: 0 auto;
 	}
 }

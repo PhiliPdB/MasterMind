@@ -8,9 +8,41 @@ body, html {
 	height: 100vh;
 	width: $board_width;
 	margin: 0 auto;
+	display: block;
 
 	.row {
+		height: calc((100vh - 66px) / 13); // Just as placeholder
 		width: $board_width;
 		margin: 0 auto;
+		display: block;
+	}
+
+	#colors {
+		width: $board_width;
+		padding: 0;
+		margin: 0;
+		
+		display: flex;
+		flex-flow: row wrap;
+		justify-content: space-around;
+		align-items: center;
+		align-content: center;
+
+		.color {
+			width: $color_radius * 2;
+			height: $color_radius * 2;
+			margin: $padding_unit;
+			border-radius: $color_radius;
+		}
 	}
 }
+
+// Setup the colors
+#color_0 { background: $red; }
+#color_1 { background: $green; }
+#color_2 { background: $blue; }
+#color_3 { background: $yellow; }
+#color_4 { background: $orange; }
+#color_5 { background: $pink; }
+#color_6 { background: $white; }
+#color_7 { background: $black; }

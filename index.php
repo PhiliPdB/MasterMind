@@ -16,6 +16,11 @@
 		 ?>
 		<div id="colors">
 			<!-- Different colors you can choose -->
+			<?php 
+			for ($i=0; $i < 8; $i++) { 
+				echo "<div id=\"color_" . $i . "\" class=\"color\"></div>";
+			}
+			 ?>
 		</div>
 	</div>
 

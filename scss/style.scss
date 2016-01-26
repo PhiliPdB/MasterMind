@@ -1,0 +1,23 @@
+// All the 8 colors you can choose
+// red, green, blue, yellow, orange, pink, white, black
+$red:  #f44336;
+$green: #4caf50;
+$blue: #2196f3;
+$yellow: #ffeb3b;
+$orange: #ff9800;
+$pink: #e91e63;
+$white: #ffffff;
+$black: #000000;
+
+body, html {
+	margin: 0;
+}
+
+#board {
+	height: 100vh;
+
+	.row {
+		width: 60vw;
+		margin: 0 auto;
+	}
+}

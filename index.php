@@ -7,6 +7,17 @@
 	<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+	<div id="board">
+		<div id="solution" class="row"></div>
+		<?php 
+		for ($i=0; $i < 12; $i++) { 
+			echo "<div id=\"row_" . $i . "\" class=\"row\"></div>";
+		}
+		 ?>
+		<div id="colors">
+			<!-- Different colors you can choose -->
+		</div>
+	</div>
 
 	<!-- Include scripts -->
 	<script src="js/script.js" type="text/javascript" charset="utf-8" async defer></script>

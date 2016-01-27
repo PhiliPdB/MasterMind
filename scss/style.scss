@@ -1,7 +1,8 @@
 @import 'variables';
 
-body, html {
+body, html, * {
 	margin: 0;
+	font-family: helvetica;
 }
 
 *[draggable=true] {
@@ -14,28 +15,60 @@ body, html {
 	background-color: rgba(238,238,238, 0.5);
 }
 
+body {
+	background: $grey;
+}
+
 // Board setup
 #board {
-	height: 100vh;
 	width: $board_width;
 	margin: 0 auto;
+	padding: $padding_unit;
 	display: block;
-	// background: #66b200;
-	// background-image: url("../images/wood-1.png"), url("../images/wood-2.png");
-	// background-repeat: repeat-x, repeat;
+	// Background
+	background: #662b00;
+	background-image: url("../images/wood-1.png"), url("../images/wood-2.png");
+	background-repeat: repeat-x, repeat;
+	// Shadow
+	box-shadow: 0 0 10px $shadow;
 
 	.row {
-		height: calc((100vh - 66px) / 13); // Just as placeholder
 		width: $board_width;
 		margin: 0 auto;
-		display: block;
+		// Flexbox setup
+		display: flex;
+		flex-flow: row;
+		justify-content: flex-start;
+		align-items: center;
+		align-content: center;
+
+		.attempt_number {
+			text-align: right;
+			vertical-align: middle;
+			height: $color_radius * 2;
+			width: 2em;
+			line-height: $color_radius * 2;
+			margin: $padding_unit / 2;
+			color: $darker_white;
+			user-select: none;
+		}
+
+		.hole {
+			width: $color_radius * 2;
+			height: $color_radius * 2;
+			border-radius: $color_radius;
+			background: $grey;
+			margin: $padding_unit / 2;
+
+			box-shadow: inset 0 0 10px $shadow;
+		}
 	}
 
 	#colors {
 		width: $board_width;
 		padding: 0;
 		margin: 0;
-
+		// Flexbox setup
 		display: flex;
 		flex-flow: row wrap;
 		justify-content: space-around;
@@ -47,6 +80,8 @@ body, html {
 			height: $color_radius * 2;
 			margin: $padding_unit;
 			border-radius: $color_radius;
+
+			box-shadow: 0 0 10px $shadow;
 		}
 	}
 }
@@ -58,5 +93,5 @@ body, html {
 #color_3 { background: $yellow; }
 #color_4 { background: $orange; }
 #color_5 { background: $pink; }
-#color_6 { background: $white; }
-#color_7 { background: $black; }
+#color_6 { background: white; }
+#color_7 { background: black; }

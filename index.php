@@ -13,9 +13,13 @@
 		<!-- Rows where you can guess the code -->
 		<?php 
 		for ($i=0; $i < 12; $i++) { 
-			echo "<div id=\"row_" . $i . "\" class=\"row\">";
+			echo "<div id=\"row_" . $i . "\" class=\"row\">\n";
+			echo "<div class=\"attempt_number\">" . (12 - $i) . "</div>";
 			// Put the pin holes here
-			echo "</div>";
+			for ($j=0; $j < 4; $j++) {
+				echo "<div id=\"hole_" . $j . "\" class=\"hole\"></div>\n";
+			}
+			echo "</div>\n";
 		}
 		 ?>
 		 <!-- Color selection -->

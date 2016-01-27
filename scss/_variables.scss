@@ -6,10 +6,12 @@ $blue: #2196f3;
 $yellow: #ffeb3b;
 $orange: #ff9800;
 $pink: #e91e63;
-$white: #ffffff;
-$black: #000000;
+// Some other colors
+$grey: #9e9e9e;
+$shadow: #212121;
+$darker_white: #e0e0e0;
 
 // Game board vars
 $board_width: 60vw;
-$color_radius: 25px;
+$color_radius: 20px; // TODO: Need some finetuning
 $padding_unit: 8px;

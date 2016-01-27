@@ -1,24 +1,23 @@
 var colorElements = document.getElementsByClassName('color');
 var attemptRows = [].slice.call(document.getElementsByClassName('row')).reverse();
 var attempt = 0;
-var element = null;
 
 window.onload = function() {
 	setDropTargets();
+
+	// Make the colors draggable
+	var colorElementsSize = colorElements.length;
+	for (var i = 0; i < colorElementsSize; i++) {
+		var element = colorElements[i];
+
+		element.setAttribute('draggable', 'true');
+
+		element.addEventListener('dragstart', function (e) {
+			e.dataTransfer.effectAllowed = 'copy';
+			e.dataTransfer.setData('id', this.id);
+		});
+	}
 };
-
-// Make the colors draggable
-var colorElementsSize = colorElements.length;
-for (var i = 0; i < colorElementsSize; i++) {
-	element = colorElements[i];
-
-	element.setAttribute('draggable', 'true');
-
-	element.addEventListener('dragstart', function (e) {
-		e.dataTransfer.effectAllowed = 'copy';
-		e.dataTransfer.setData('id', this.id);
-	});
-}
 
 function setDropTargets() {
 	var holes = attemptRows[attempt].getElementsByClassName('hole');
@@ -53,6 +52,10 @@ function setDropTargets() {
 
 			// Handle the drop
 			this.className = 'hole filled ' + e.dataTransfer.getData('id');
+
+			// TODO: Make hole draggble
+			// TODO: Save color so we can check if it is right
+			// TODO: Check if not another color was here. If so, place it back
 		});
 	}
 }

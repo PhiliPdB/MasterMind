@@ -1,6 +1,7 @@
 var colorElements = document.getElementsByClassName('color');
 var element = null;
 
+// Make the colors draggable
 var colorElementsSize = colorElements.length;
 for (var i = 0; i < colorElementsSize; i++) {
 	element = colorElements[i];

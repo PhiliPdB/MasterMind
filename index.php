@@ -14,6 +14,7 @@
 		<?php 
 		for ($i=0; $i < 12; $i++) { 
 			echo "<div id=\"row_" . $i . "\" class=\"row\">";
+			// Put the pin holes here
 			echo "</div>";
 		}
 		 ?>

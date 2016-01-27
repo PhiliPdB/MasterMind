@@ -8,13 +8,16 @@
 </head>
 <body>
 	<div id="board">
+		<!-- Row with the solution -->
 		<div id="solution" class="row"></div>
-			<?php 
-			for ($i=0; $i < 12; $i++) { 
-				echo "<div id=\"row_" . $i . "\" class=\"row\">";
-				echo "</div>";
-			}
-			 ?>
+		<!-- Rows where you can guess the code -->
+		<?php 
+		for ($i=0; $i < 12; $i++) { 
+			echo "<div id=\"row_" . $i . "\" class=\"row\">";
+			echo "</div>";
+		}
+		 ?>
+		 <!-- Color selection -->
 		<div id="colors">
 			<!-- Different colors you can choose -->
 			<?php 

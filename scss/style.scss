@@ -20,6 +20,9 @@ body, html {
 	width: $board_width;
 	margin: 0 auto;
 	display: block;
+	// background: #66b200;
+	// background-image: url("../images/wood-1.png"), url("../images/wood-2.png");
+	// background-repeat: repeat-x, repeat;
 
 	.row {
 		height: calc((100vh - 66px) / 13); // Just as placeholder

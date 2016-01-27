@@ -11,7 +11,8 @@
 		<div id="solution" class="row"></div>
 			<?php 
 			for ($i=0; $i < 12; $i++) { 
-				echo "<div id=\"row_" . $i . "\" class=\"row\"></div>";
+				echo "<div id=\"row_" . $i . "\" class=\"row\">";
+				echo "</div>";
 			}
 			 ?>
 		<div id="colors">

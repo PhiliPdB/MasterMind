@@ -29,19 +29,19 @@ function setDropTargets() {
 
 		hole.addEventListener('dragover', function (e) {
 			if (e.preventDefault()) e.preventDefault();
-			this.className = 'hole over';
+			this.className += ' over';
 			e.dataTransfer.dropEffect = 'copy';
 			return false;
 		});
 
 		// to get IE to work
 		hole.addEventListener('dragenter', function (e) {
-			this.className = 'hole over';
+			this.className += ' over';
 			return false;
 		});
 
 		hole.addEventListener('dragleave', function () {
-			this.className = 'hole';
+			this.className.replace(' over', '');
 		});
 
 		hole.addEventListener('drop', function (e) {
@@ -52,7 +52,7 @@ function setDropTargets() {
 			el.style.opacity = '.5';
 
 			// Handle the drop
-			hole.className = 'hole';
+			this.className = 'hole filled ' + e.dataTransfer.getData('id');
 		});
 	}
 }

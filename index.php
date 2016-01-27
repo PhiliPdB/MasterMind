@@ -22,7 +22,7 @@
 			echo "</div>\n";
 		}
 		 ?>
-		 <!-- Color selection -->
+		<!-- Color selection -->
 		<div id="colors">
 			<!-- Different colors you can choose -->
 			<?php 

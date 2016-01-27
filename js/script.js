@@ -13,4 +13,4 @@ for (var i = 0; i < colorElementsSize; i++) {
 		e.dataTransfer.setData('text/plain', this.id);
 		e.dataTransfer.setData('text/html', this.outerHTML);
 	});
-};
+}

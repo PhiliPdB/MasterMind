@@ -5,16 +5,16 @@ body, html {
 }
 
 *[draggable=true] {
-  user-select:none;
-  -khtml-user-drag: element;
-  cursor: move;
+	user-select:none;
+	-khtml-user-drag: element;
+	cursor: move;
 }
 
 *:-khtml-drag {
-  background-color: rgba(238,238,238, 0.5);
+	background-color: rgba(238,238,238, 0.5);
 }
 
-
+// Board setup
 #board {
 	height: 100vh;
 	width: $board_width;

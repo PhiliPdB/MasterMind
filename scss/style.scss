@@ -3,6 +3,10 @@
 body, html, * {
 	margin: 0;
 	font-family: helvetica;
+	// Transitions
+	transition: background $timing;
+	transition: opacity $timing;
+	transition: box-shadow $timing;
 }
 
 *[draggable=true] {

@@ -9,11 +9,11 @@
 <body>
 	<div id="board">
 		<div id="solution" class="row"></div>
-		<?php 
-		for ($i=0; $i < 12; $i++) { 
-			echo "<div id=\"row_" . $i . "\" class=\"row\"></div>";
-		}
-		 ?>
+			<?php 
+			for ($i=0; $i < 12; $i++) { 
+				echo "<div id=\"row_" . $i . "\" class=\"row\"></div>";
+			}
+			 ?>
 		<div id="colors">
 			<!-- Different colors you can choose -->
 			<?php 

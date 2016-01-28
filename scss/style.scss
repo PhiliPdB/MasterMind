@@ -28,7 +28,12 @@ body {
 	width: $board_width;
 	margin: 0 auto;
 	padding: $padding_unit;
-	display: block;
+	// Flexbox setup
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: flex-start;
+	align-items: stretch;
+	align-content: flex-start;
 	// Background
 	background: #8b5a2b;
 	background-image: url("../images/wood-1.png");
@@ -37,11 +42,10 @@ body {
 	box-shadow: 0 0 10px $shadow;
 
 	.row {
-		width: $board_width;
 		margin: 0 auto;
 		// Flexbox setup
 		display: flex;
-		flex-flow: row;
+		flex-flow: row nowrap;
 		justify-content: flex-start;
 		align-items: center;
 		align-content: center;
@@ -57,6 +61,17 @@ body {
 			user-select: none;
 		}
 
+		.little_holes {
+			width: $color_radius * 2;
+			margin-left: $padding_unit / 2;
+			// Flexbox setup
+			display: flex;
+			flex-flow: row wrap;
+			justify-content: flex-start;
+			align-items: center;
+			align-content: center;
+		}
+
 		.hole {
 			width: $color_radius * 2;
 			height: $color_radius * 2;
@@ -64,11 +79,18 @@ body {
 			background: $grey;
 			margin: $padding_unit / 2;
 
-			box-shadow: inset 0 0 10px $shadow;
+			box-shadow: inset 0 0 5px $shadow;
 		}
 
 		.hole.filled {
 			box-shadow: 0 0 10px $shadow;
+		}
+
+		.hole.little {
+			width: $color_radius * .8;
+			height: $color_radius * .8;
+			border-radius: $color_radius * .8;
+			margin: $color_radius * .1;
 		}
 
 		.hole.color_0 { background: $red; }

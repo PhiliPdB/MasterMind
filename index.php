@@ -8,20 +8,27 @@
 </head>
 <body>
 	<div id="board">
-		<!-- Row with the solution -->
-		<div id="solution" class="row"></div>
-		<!-- Rows where you can guess the code -->
-		<?php 
-		for ($i=0; $i < 12; $i++) { 
-			echo "<div id=\"row_" . $i . "\" class=\"row\">";
-			echo "<div class=\"attempt_number\">" . (12 - $i) . "</div>";
-			// Put the pin holes here
-			for ($j=0; $j < 4; $j++) {
-				echo "<div id=\"hole_" . $j . "\" class=\"hole\"></div>";
+		<div id="rows">
+			<!-- Row with the solution -->
+			<div id="solution" class="row"></div>
+			<!-- Rows where you can guess the code -->
+			<?php 
+			for ($i=0; $i < 12; $i++) { 
+				echo "<div id=\"row_" . $i . "\" class=\"row\">";
+				echo "<div class=\"attempt_number\">" . (12 - $i) . "</div>";
+				// Put the pin holes here
+				for ($j=0; $j < 4; $j++) {
+					echo "<div id=\"hole_" . $j . "\" class=\"hole\"></div>";
+				}
+				echo "<div class=\"little_holes\">";
+				for ($j=0; $j < 4; $j++) { 
+					echo "<div id=\"little_hole_" . $j . "\" class=\"little hole\"></div>";
+				}
+				echo "</div>";
+				echo "</div>";
 			}
-			echo "</div>";
-		}
-		 ?>
+			 ?>
+		</div>
 		<!-- Color selection -->
 		<div id="colors">
 			<!-- Different colors you can choose -->

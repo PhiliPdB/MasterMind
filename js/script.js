@@ -49,13 +49,32 @@ function setDropTargets() {
 			var el = document.getElementById(e.dataTransfer.getData('id'));
 			el.setAttribute('draggable', 'false');
 			el.style.opacity = '.5';
+			// Check if hole was filled before
+			if (this.className.indexOf('color') > -1) {
+				var classNameArray = this.className.split(' ');
+				console.log(classNameArray);
+
+				var oldColorId = null;
+				var classNameArrayLength = classNameArray.length;
+				for (var i = 0; i < classNameArrayLength; i++) {
+					if (classNameArray[i].indexOf('color') > -1) {
+						oldColorId = classNameArray[i];
+						break;
+					}
+				}
+
+				if (oldColorId !== null) {
+					var oldColorElement = document.getElementById(oldColorId);
+					oldColorElement.setAttribute('draggable', 'true');
+					oldColorElement.style.opacity = '1';
+				}
+			}
 
 			// Handle the drop
 			this.className = 'hole filled ' + e.dataTransfer.getData('id');
 
 			// TODO: Make hole draggble
 			// TODO: Save color so we can check if it is right
-			// TODO: Check if not another color was here. If so, place it back
 		});
 	}
 }

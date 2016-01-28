@@ -15,6 +15,7 @@ window.onload = function() {
 		element.addEventListener('dragstart', function (e) {
 			e.dataTransfer.effectAllowed = 'copy';
 			e.dataTransfer.setData('id', this.id);
+			e.dataTransfer.setData('color', parseInt(this.id.replace('color_', '')));
 		});
 	}
 };
@@ -28,19 +29,19 @@ function setDropTargets() {
 
 		hole.addEventListener('dragover', function (e) {
 			if (e.preventDefault()) e.preventDefault();
-			this.className += ' over';
+			// if (this.className.indexOf(' over') > -1) this.className += ' over';
 			e.dataTransfer.dropEffect = 'copy';
 			return false;
 		});
 
 		// to get IE to work
 		hole.addEventListener('dragenter', function (e) {
-			this.className += ' over';
+			// if (this.className.indexOf(' over') > -1) this.className += ' over';
 			return false;
 		});
 
 		hole.addEventListener('dragleave', function () {
-			this.className.replace(' over', '');
+			// this.className.replace(' over', '');
 		});
 
 		hole.addEventListener('drop', function (e) {

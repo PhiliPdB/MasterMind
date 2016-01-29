@@ -4,7 +4,7 @@ var currentInput = [null, null, null, null];
 var attempt = 0;
 
 window.onload = function() {
-	setDropTargets();
+	setupAttemptRow();
 
 	// Make the colors draggable
 	var colorElementsSize = colorElements.length;
@@ -20,6 +20,14 @@ window.onload = function() {
 		});
 	}
 };
+
+function setupAttemptRow() {
+	setDropTargets();
+
+	var checkButton = attemptRows[attempt].getElementsByClassName('check')[0];
+	checkButton.style.display = 'block';
+	checkButton.style.opacity = '1';
+}
 
 function setDropTargets() {
 	var holes = attemptRows[attempt].getElementsByClassName('hole');
@@ -75,6 +83,12 @@ function setDropTargets() {
 			// Handle the drop
 			this.className = 'hole filled ' + e.dataTransfer.getData('id');
 
+			// Save color
+			var index = parseInt(this.id.replace('hole_', ''));
+			var color = parseInt(el.id.replace('color_', ''));
+			currentInput[index] = color;
+			console.log(currentInput);
+
 			// TODO: Make hole draggable
 			// TODO: Save color so we can check if it is right
 		});
@@ -101,6 +115,7 @@ function checkColors() {
 		if (request.readyState === XMLHttpRequest.DONE) {
 			if (request.status === 200) {
 				// Handle output
+				console.log(request.responseText);
 				handleColorValidation(JSON.parse(request.responseText));
 			}
 		}
@@ -109,5 +124,57 @@ function checkColors() {
 }
 
 function handleColorValidation(validation) {
-	// TODO
+	var little_holes = attemptRows[attempt].getElementsByClassName('little hole');
+	var length = little_holes.length;
+	for (var i = 0; i < length; i++) {
+		if (validation.black > 0) {
+			little_holes[i].className += " filled black";
+			validation.black--;
+			continue;
+		} else if (validation.white > 0) {
+			little_holes[i].className += " filled white";
+			validation.white--;
+			continue;
+		} else break;
+	}
+	nextAttempt();
+}
+
+function nextAttempt() {
+	// reset used colors
+	currentInput = [null, null, null, null];
+	// Make the colors draggable
+	var colorElementsSize = colorElements.length;
+	for (var i = 0; i < colorElementsSize; i++) {
+		var element = colorElements[i];
+
+		if (element.getAttribute('draggable') == "true") {
+			continue;
+		}
+
+		element.setAttribute('draggable', 'true');
+		element.style.opacity = '1';
+
+		element.addEventListener('dragstart', function (e) {
+			e.dataTransfer.effectAllowed = 'copy';
+			e.dataTransfer.setData('id', this.id);
+			e.dataTransfer.setData('color', parseInt(this.id.replace('color_', '')));
+		});
+	}
+	// Remove event listeners
+	var holes = attemptRows[attempt].getElementsByClassName('hole');
+	var length = holes.length;
+	for (var j = 0; j < length; j++) {
+		var old_element = holes[j];
+		var new_element = old_element.cloneNode(true);
+		old_element.parentNode.replaceChild(new_element, old_element);
+	}
+	// Hide check button
+	var checkButton = attemptRows[attempt].getElementsByClassName('check')[0];
+	checkButton.style.display = 'none';
+	checkButton.style.opacity = '0';
+
+	// Setup next row
+	attempt++;
+	setupAttemptRow();
 }

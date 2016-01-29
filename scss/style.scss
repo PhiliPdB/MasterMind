@@ -72,6 +72,13 @@ body {
 			align-content: center;
 		}
 
+		.check {
+			fill: $darker_white;
+			cursor: pointer;
+			opacity: 0;
+			display: none;
+		}
+
 		.hole {
 			width: $color_radius * 2;
 			height: $color_radius * 2;
@@ -101,6 +108,9 @@ body {
 		.hole.color_5 { background: $pink; }
 		.hole.color_6 { background: white; }
 		.hole.color_7 { background: black; }
+
+		.hole.little.black { background: black; }
+		.hole.little.white { background: white; }
 	}
 
 	#colors {

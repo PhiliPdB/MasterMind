@@ -62,7 +62,6 @@ function setDropTargets() {
 			// Check if hole was filled before
 			if (this.className.indexOf('color') > -1) {
 				var classNameArray = this.className.split(' ');
-				console.log(classNameArray);
 
 				var oldColorId = null;
 				var classNameArrayLength = classNameArray.length;
@@ -87,10 +86,8 @@ function setDropTargets() {
 			var index = parseInt(this.id.replace('hole_', ''));
 			var color = parseInt(el.id.replace('color_', ''));
 			currentInput[index] = color;
-			console.log(currentInput);
 
 			// TODO: Make hole draggable
-			// TODO: Save color so we can check if it is right
 		});
 	}
 }
@@ -115,7 +112,6 @@ function checkColors() {
 		if (request.readyState === XMLHttpRequest.DONE) {
 			if (request.status === 200) {
 				// Handle output
-				console.log(request.responseText);
 				handleColorValidation(JSON.parse(request.responseText));
 			}
 		}

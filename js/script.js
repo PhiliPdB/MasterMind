@@ -120,6 +120,7 @@ function checkColors() {
 }
 
 function handleColorValidation(validation) {
+	var won = validation.black == 4;
 	var little_holes = attemptRows[attempt].getElementsByClassName('little hole');
 	var length = little_holes.length;
 	for (var i = 0; i < length; i++) {
@@ -133,7 +134,14 @@ function handleColorValidation(validation) {
 			continue;
 		} else break;
 	}
-	nextAttempt();
+	// Next step
+	if (!won && attempt++ == 12) {
+		nextAttempt();
+	} else if (won) {
+		// TODO show solution
+	} else if (attempt++ == 12) {
+		// TODO show lose
+	}
 }
 
 function nextAttempt() {

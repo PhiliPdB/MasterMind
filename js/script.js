@@ -23,7 +23,7 @@ window.onload = function() {
 
 function setupAttemptRow() {
 	setDropTargets();
-
+	// Display check button
 	var checkButton = attemptRows[attempt].getElementsByClassName('check')[0];
 	checkButton.style.display = 'block';
 	checkButton.style.opacity = '1';
@@ -55,7 +55,7 @@ function setDropTargets() {
 
 		hole.addEventListener('drop', function (e) {
 			if (e.stopPropagation) e.stopPropagation(); // stops the browser from redirecting...why???
-
+			// Make the color not draggable anymore
 			var el = document.getElementById(e.dataTransfer.getData('id'));
 			el.setAttribute('draggable', 'false');
 			el.style.opacity = '.5';
@@ -122,6 +122,7 @@ function checkColors() {
 function handleColorValidation(validation) {
 	var won = validation.black == 4;
 	var little_holes = attemptRows[attempt].getElementsByClassName('little hole');
+	// Fill the little holes
 	var length = little_holes.length;
 	for (var i = 0; i < length; i++) {
 		if (validation.black > 0) {

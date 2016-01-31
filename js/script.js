@@ -101,7 +101,7 @@ function checkColors() {
 	var request = new XMLHttpRequest();
 	var params = 'colors=' + currentInput;
 
-	request.open('POST', 'validateColors.php', true);
+	request.open('POST', 'php/validateColors.php', true);
 
 	//Send the proper header information along with the request
 	request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");

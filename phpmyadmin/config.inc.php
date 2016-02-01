@@ -66,8 +66,8 @@ $cfg['Servers'][$i]['AllowNoPassword'] = true;
 /*
  * Directories for saving/loading files from server
  */
-$cfg['UploadDir'] = '';
-$cfg['SaveDir'] = '';
+$cfg['UploadDir'] = '../database';
+$cfg['SaveDir'] = '../database';
 /**
  * Whether to display icons or text or both icons and text in table row
  * action segment. Value can be either of 'icons', 'text' or 'both'.

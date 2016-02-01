@@ -18,3 +18,4 @@ gulp
 # Web page is now running on localhost:8080
 # phpmyadmin is running on localhost:1337
 ```
+NOTE: To make highscores working, you have to manually import `database/highscores.sql` into phpmyadmin.

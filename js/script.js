@@ -17,6 +17,7 @@ window.onload = function() {
 			e.dataTransfer.effectAllowed = 'copy';
 			e.dataTransfer.setData('id', this.id);
 			e.dataTransfer.setData('color', parseInt(this.id.replace('color_', '')));
+			e.dataTransfer.setData('fromHole', false);
 		});
 	}
 };
@@ -34,61 +35,7 @@ function setDropTargets() {
 
 	var length = holes.length;
 	for (var i = 0; i < length; i++) {
-		var hole = holes[i];
-
-		hole.addEventListener('dragover', function (e) {
-			if (e.preventDefault()) e.preventDefault();
-			// if (this.className.indexOf(' over') > -1) this.className += ' over';
-			e.dataTransfer.dropEffect = 'copy';
-			return false;
-		});
-
-		// to get IE to work
-		hole.addEventListener('dragenter', function (e) {
-			// if (this.className.indexOf(' over') > -1) this.className += ' over';
-			return false;
-		});
-
-		hole.addEventListener('dragleave', function () {
-			// this.className.replace(' over', '');
-		});
-
-		hole.addEventListener('drop', function (e) {
-			if (e.stopPropagation) e.stopPropagation(); // stops the browser from redirecting...why???
-			// Make the color not draggable anymore
-			var el = document.getElementById(e.dataTransfer.getData('id'));
-			el.setAttribute('draggable', 'false');
-			el.style.opacity = '.5';
-			// Check if hole was filled before
-			if (this.className.indexOf('color') > -1) {
-				var classNameArray = this.className.split(' ');
-
-				var oldColorId = null;
-				var classNameArrayLength = classNameArray.length;
-				for (var i = 0; i < classNameArrayLength; i++) {
-					if (classNameArray[i].indexOf('color') > -1) {
-						oldColorId = classNameArray[i];
-						break;
-					}
-				}
-
-				if (oldColorId !== null) {
-					var oldColorElement = document.getElementById(oldColorId);
-					oldColorElement.setAttribute('draggable', 'true');
-					oldColorElement.style.opacity = '1';
-				}
-			}
-
-			// Handle the drop
-			this.className = 'hole filled ' + e.dataTransfer.getData('id');
-
-			// Save color
-			var index = parseInt(this.id.replace('hole_', ''));
-			var color = parseInt(el.id.replace('color_', ''));
-			currentInput[index] = color;
-
-			// TODO: Make hole draggable
-		});
+		setDropZone(holes[i]);
 	}
 }
 
@@ -182,4 +129,118 @@ function nextAttempt() {
 	// Setup next row
 	attempt++;
 	setupAttemptRow();
+}
+
+function setDropZone(element) {
+	element.addEventListener('dragover', function (e) {
+		if (e.preventDefault()) e.preventDefault();
+		// if (this.className.indexOf(' over') > -1) this.className += ' over';
+		e.dataTransfer.dropEffect = 'copy';
+		return false;
+	});
+
+	// to get IE to work
+	element.addEventListener('dragenter', function (e) {
+		// if (this.className.indexOf(' over') > -1) this.className += ' over';
+		return false;
+	});
+
+	element.addEventListener('dragleave', function () {
+		// this.className.replace(' over', '');
+	});
+
+	element.addEventListener('drop', function (e) {
+		if (e.stopPropagation) e.stopPropagation(); // stops the browser from redirecting...why???
+		
+		var el;
+		var id = e.dataTransfer.getData('id');
+		if (e.dataTransfer.getData('fromHole') === "false") {
+			// Make the color not draggable anymore
+			el = document.getElementById(e.dataTransfer.getData('id'));
+			el.setAttribute('draggable', 'false');
+			el.style.opacity = '.5';
+
+			// Check if hole was filled before
+			if (this.className.indexOf('color') > -1) {
+				var classNameArray = this.className.split(' ');
+
+				var oldColorId = null;
+				var classNameArrayLength = classNameArray.length;
+				for (var i = 0; i < classNameArrayLength; i++) {
+					if (classNameArray[i].indexOf('color') > -1) {
+						oldColorId = classNameArray[i];
+						break;
+					}
+				}
+
+				if (oldColorId !== null) {
+					var oldColorElement = document.getElementById(oldColorId);
+					oldColorElement.setAttribute('draggable', 'true');
+					oldColorElement.style.opacity = '1';
+				}
+			}
+		} else {
+			var otherHole = attemptRows[attempt].getElementsByClassName(e.dataTransfer.getData('class'))[0];
+			console.log(e.dataTransfer.getData('class'));
+			console.log(otherHole);
+			// Check if hole was filled before
+			if (this.className.indexOf('color') > -1) {
+				var classNameArray = this.className.split(' ');
+
+				var oldColorId = null;
+				var classNameArrayLength = classNameArray.length;
+				for (var i = 0; i < classNameArrayLength; i++) {
+					if (classNameArray[i].indexOf('color') > -1) {
+						oldColorId = classNameArray[i];
+						break;
+					}
+				}
+
+				if (oldColorId !== null) {
+					this.className.replace(' ' + oldColorId, '');
+					otherHole.className = otherHole.className.replace(
+						' color_' + e.dataTransfer.getData('color'), ' ' + oldColorId
+					);
+
+					var otherHoleClone = otherHole.cloneNode(true);
+					// Set event listeners
+					setDropZone(otherHoleClone);
+					otherHoleClone.addEventListener('dragstart', function (e) {
+						e.dataTransfer.effectAllowed = 'copy';
+						e.dataTransfer.setData('id', otherHoleClone.id);
+						e.dataTransfer.setData('class', otherHoleClone.className);
+						e.dataTransfer.setData('color', parseInt(oldColorId.replace('color_', '')));
+						e.dataTransfer.setData('fromHole', true);
+					});
+					// Replace
+					otherHole.parentNode.replaceChild(otherHoleClone, otherHole);
+				}
+			} else {
+				otherHole.className = 'hole';
+				otherHole.setAttribute('draggable', 'false');
+			}
+
+			id = 'color_' + e.dataTransfer.getData('color');
+			el = document.getElementById(id);
+		}
+
+		// Handle the drop
+		this.className = 'hole filled ' + id;
+
+		// Save color
+		var index = parseInt(this.id.replace('hole_', ''));
+		var color = parseInt(el.id.replace('color_', ''));
+		currentInput[index] = color;
+
+		// TODO: Make hole draggable
+		this.setAttribute('draggable', 'true');
+
+		this.addEventListener('dragstart', function (e) {
+			e.dataTransfer.effectAllowed = 'copy';
+			e.dataTransfer.setData('id', this.id);
+			e.dataTransfer.setData('class', this.className);
+			e.dataTransfer.setData('color', parseInt(el.id.replace('color_', '')));
+			e.dataTransfer.setData('fromHole', true);
+		});
+	});
 }

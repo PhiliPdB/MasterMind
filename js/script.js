@@ -136,11 +136,11 @@ function handleColorValidation(validation) {
 		} else break;
 	}
 	// Next step
-	if (!won && attempt++ == 12) {
+	if (!won && attempt + 1 < 12) {
 		nextAttempt();
 	} else if (won) {
 		// TODO show solution
-	} else if (attempt++ == 12) {
+	} else if (attempt + 1 == 12) {
 		// TODO show lose
 	}
 }

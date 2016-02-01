@@ -45,6 +45,7 @@ gulp.task('browser-sync', function() {
 		files: liveReloadFiles,
 		proxy: '127.0.0.1:8000',
     	port: 8080,
+    	open: false
 	}, function (err, bs) {
 		if (err)
 			console.log(err);

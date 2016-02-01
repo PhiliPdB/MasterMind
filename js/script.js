@@ -13,11 +13,14 @@ window.onload = function() {
 
 		element.setAttribute('draggable', 'true');
 
-		element.addEventListener('dragstart', function (e) {
+		addEvent(element, 'dragstart', function (e) {
 			e.dataTransfer.effectAllowed = 'copy';
-			e.dataTransfer.setData('id', this.id);
-			e.dataTransfer.setData('color', parseInt(this.id.replace('color_', '')));
-			e.dataTransfer.setData('fromHole', false);
+			var data = {
+				id: this.id,
+				color: parseInt(this.id.replace('color_', '')),
+				fromHole: false
+			};
+			e.dataTransfer.setData('Text', JSON.stringify(data));
 		});
 	}
 };
@@ -107,7 +110,7 @@ function nextAttempt() {
 		element.setAttribute('draggable', 'true');
 		element.style.opacity = '1';
 
-		element.addEventListener('dragstart', function (e) {
+		addEvent(element, 'dragstart', function (e) {
 			e.dataTransfer.effectAllowed = 'copy';
 			e.dataTransfer.setData('id', this.id);
 			e.dataTransfer.setData('color', parseInt(this.id.replace('color_', '')));
@@ -132,7 +135,7 @@ function nextAttempt() {
 }
 
 function setDropZone(element) {
-	element.addEventListener('dragover', function (e) {
+	addEvent(element, 'dragover', function (e) {
 		if (e.preventDefault()) e.preventDefault();
 		// if (this.className.indexOf(' over') > -1) this.className += ' over';
 		e.dataTransfer.dropEffect = 'copy';
@@ -140,23 +143,24 @@ function setDropZone(element) {
 	});
 
 	// to get IE to work
-	element.addEventListener('dragenter', function (e) {
+	addEvent(element, 'dragenter', function (e) {
 		// if (this.className.indexOf(' over') > -1) this.className += ' over';
 		return false;
 	});
 
-	element.addEventListener('dragleave', function () {
+	addEvent(element, 'dragleave', function () {
 		// this.className.replace(' over', '');
 	});
 
-	element.addEventListener('drop', function (e) {
+	addEvent(element, 'drop', function (e) {
 		if (e.stopPropagation) e.stopPropagation(); // stops the browser from redirecting...why???
 		
+		var data = JSON.parse(e.dataTransfer.getData('Text'));
 		var el;
-		var id = e.dataTransfer.getData('id');
-		if (e.dataTransfer.getData('fromHole') === "false") {
+		var id = data.id;
+		if (!data.fromHole) {
 			// Make the color not draggable anymore
-			el = document.getElementById(e.dataTransfer.getData('id'));
+			el = document.getElementById(data.id);
 			el.setAttribute('draggable', 'false');
 			el.style.opacity = '.5';
 
@@ -179,7 +183,7 @@ function setDropZone(element) {
 					oldColorElement.style.opacity = '1';
 				}
 			}
-		} else {
+		} else if (data.fromHole) {
 			var otherHole = attemptRows[attempt].getElementsByClassName(e.dataTransfer.getData('class'))[0];
 			console.log(e.dataTransfer.getData('class'));
 			console.log(otherHole);
@@ -199,18 +203,21 @@ function setDropZone(element) {
 				if (oldColorId !== null) {
 					this.className.replace(' ' + oldColorId, '');
 					otherHole.className = otherHole.className.replace(
-						' color_' + e.dataTransfer.getData('color'), ' ' + oldColorId
+						' color_' + data.color, ' ' + oldColorId
 					);
 
 					var otherHoleClone = otherHole.cloneNode(true);
 					// Set event listeners
 					setDropZone(otherHoleClone);
-					otherHoleClone.addEventListener('dragstart', function (e) {
+					addEvent(otherHoleClone, 'dragstart', function (e) {
 						e.dataTransfer.effectAllowed = 'copy';
-						e.dataTransfer.setData('id', otherHoleClone.id);
-						e.dataTransfer.setData('class', otherHoleClone.className);
-						e.dataTransfer.setData('color', parseInt(oldColorId.replace('color_', '')));
-						e.dataTransfer.setData('fromHole', true);
+						var data = {
+							id: otherHoleClone.id,
+							class: otherHoleClone.className,
+							color: parseInt(oldColorId.replace('color_', '')),
+							fromHole: true
+						};
+						e.dataTransfer.setData('Text', JSON.stringify(data));
 					});
 					// Replace
 					otherHole.parentNode.replaceChild(otherHoleClone, otherHole);
@@ -220,7 +227,7 @@ function setDropZone(element) {
 				otherHole.setAttribute('draggable', 'false');
 			}
 
-			id = 'color_' + e.dataTransfer.getData('color');
+			id = 'color_' + data.color;
 			el = document.getElementById(id);
 		}
 
@@ -232,15 +239,43 @@ function setDropZone(element) {
 		var color = parseInt(el.id.replace('color_', ''));
 		currentInput[index] = color;
 
-		// TODO: Make hole draggable
+		// Make hole draggable
 		this.setAttribute('draggable', 'true');
 
-		this.addEventListener('dragstart', function (e) {
+		addEvent(this, 'dragstart', function (e) {
 			e.dataTransfer.effectAllowed = 'copy';
-			e.dataTransfer.setData('id', this.id);
-			e.dataTransfer.setData('class', this.className);
-			e.dataTransfer.setData('color', parseInt(el.id.replace('color_', '')));
-			e.dataTransfer.setData('fromHole', true);
+			var data = {
+				id: this.id,
+				class: this.className,
+				color: parseInt(el.id.replace('color_', '')),
+				fromHole: true
+			};
+			e.dataTransfer.setData('Text', JSON.stringify(data));
 		});
 	});
 }
+
+// This is a function from https://github.com/remy/html5demos
+var addEvent = (function () {
+  if (document.addEventListener) {
+    return function (el, type, fn) {
+      if (el && el.nodeName || el === window) {
+        el.addEventListener(type, fn, false);
+      } else if (el && el.length) {
+        for (var i = 0; i < el.length; i++) {
+          addEvent(el[i], type, fn);
+        }
+      }
+    };
+  } else {
+    return function (el, type, fn) {
+      if (el && el.nodeName || el === window) {
+        el.attachEvent('on' + type, function () { return fn.call(el, window.event); });
+      } else if (el && el.length) {
+        for (var i = 0; i < el.length; i++) {
+          addEvent(el[i], type, fn);
+        }
+      }
+    };
+  }
+})();

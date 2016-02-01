@@ -181,10 +181,8 @@ function setDropZone(element) {
 					oldColorElement.style.opacity = '1';
 				}
 			}
-		} else if (data.fromHole) {
-			var otherHole = attemptRows[attempt].getElementsByClassName(e.dataTransfer.getData('class'))[0];
-			console.log(e.dataTransfer.getData('class'));
-			console.log(otherHole);
+		} else {
+			var otherHole = attemptRows[attempt].getElementsByClassName(data.class)[0];
 			// Check if hole was filled before
 			if (this.className.indexOf('color') > -1) {
 				var classNameArray = this.className.split(' ');

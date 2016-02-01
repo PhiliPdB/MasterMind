@@ -2,6 +2,7 @@
 	"name": "MasterMind",
 	"version": "0.0.1",
 	"description": "School assignment",
+	"author": "PhiliPdB <phlpdbrn@gmail.com>",
 	"repository": "PhiliPdB/MasterMind",
 	"devDependencies": {
 	  	"gulp": "^3.9.0",

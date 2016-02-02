@@ -1,3 +1,7 @@
+<?php 
+// Reset color code
+include('php/resetColors.php');
+ ?>
 <!DOCTYPE html>
 <html>
 <head>

@@ -9,6 +9,7 @@ include('php/resetColors.php');
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>Mastermind</title>
 	<link rel="stylesheet" href="css/style.css">
+	<link rel="import" href="https://www.polymer-project.org/0.5/components/paper-ripple/paper-ripple.html">
 </head>
 <body>
 	<div id="board">
@@ -53,7 +54,10 @@ include('php/resetColors.php');
 	<div id="dimmer"></div>
 	<div id="lose">
 		<p>You lost, mate.</p>
-		<button onclick="resetBoard()">Try again</button>
+		<div class="button raised" onclick="resetBoard()">
+			<div class="center" fit>Try again</div>
+			<paper-ripple fit></paper-ripple>
+		</div>
 	</div>
 	
 	<!-- Include scripts -->

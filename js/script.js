@@ -112,8 +112,12 @@ function nextAttempt() {
 
 		addEvent(element, 'dragstart', function (e) {
 			e.dataTransfer.effectAllowed = 'copy';
-			e.dataTransfer.setData('id', this.id);
-			e.dataTransfer.setData('color', parseInt(this.id.replace('color_', '')));
+			var data = {
+				id: this.id,
+				color: parseInt(this.id.replace('color_', '')),
+				fromHole: false
+			};
+			e.dataTransfer.setData('Text', JSON.stringify(data));
 		});
 	}
 	// Remove event listeners
@@ -253,6 +257,72 @@ function setDropZone(element) {
 			e.dataTransfer.setData('Text', JSON.stringify(data));
 		});
 	});
+}
+
+function resetBoard() {
+	// Reset color code
+	resetColors();
+	// Reset used colors
+	currentInput = [null, null, null, null];
+	// Make the colors draggable
+	var colorElementsSize = colorElements.length;
+	for (var i = 0; i < colorElementsSize; i++) {
+		var element = colorElements[i];
+
+		if (element.getAttribute('draggable') == "true") {
+			continue;
+		}
+
+		element.setAttribute('draggable', 'true');
+		element.style.opacity = '1';
+
+
+		addEvent(element, 'dragstart', function (e) {
+			e.dataTransfer.effectAllowed = 'copy';
+			var data = {
+				id: this.id,
+				color: parseInt(this.id.replace('color_', '')),
+				fromHole: false
+			};
+			e.dataTransfer.setData('Text', JSON.stringify(data));
+		});
+	}
+	// Remove event listeners and reset colors
+	var attemptRowLength = attemptRows.length - 1;
+	for (var j = 0; j < attemptRowLength; j++) {
+		var holes = attemptRows[j].getElementsByClassName('hole');
+		var length = holes.length;
+		for (var k = 0; k < length; k++) {
+			var old_element = holes[k];
+			var new_element = old_element.cloneNode(true);
+			new_element.setAttribute('draggable', 'false');
+			if (new_element.className.indexOf('little') > -1) {
+				new_element.className = 'hole little';
+			} else {
+				new_element.className = 'hole';
+			}
+			old_element.parentNode.replaceChild(new_element, old_element);
+		}
+		// Hide check button
+		var checkButton = attemptRows[j].getElementsByClassName('check')[0];
+		if (j === 0) {
+			checkButton.style.display = 'block';
+			checkButton.style.opacity = '1';
+		} else {
+			checkButton.style.display = 'none';
+			checkButton.style.opacity = '0';
+		}
+	}
+
+	// Reset attempt
+	attempt = 0;
+	setupAttemptRow();
+}
+
+function resetColors() {
+	var request = new XMLHttpRequest();
+	request.open('POST', 'php/resetColors.php', true);
+	request.send();
 }
 
 // This is a function from https://github.com/remy/html5demos

@@ -53,7 +53,7 @@ include('php/resetColors.php');
 	<div id="dimmer"></div>
 	<div id="lose">
 		<p>You lost, mate.</p>
-		<a href=".."><button>Try again</button></a>
+		<button onclick="resetBoard()">Try again</button>
 	</div>
 	
 	<!-- Include scripts -->

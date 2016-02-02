@@ -151,6 +151,7 @@ function setDropZone(element) {
 	});
 
 	addEvent(element, 'drop', function (e) {
+		if (e.preventDefault) e.preventDefault();
 		if (e.stopPropagation) e.stopPropagation(); // stops the browser from redirecting...why???
 		
 		var data = JSON.parse(e.dataTransfer.getData('Text'));

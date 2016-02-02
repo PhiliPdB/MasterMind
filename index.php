@@ -1,4 +1,4 @@
-<?php 
+<?php
 // Reset color code
 include('php/resetColors.php');
  ?>
@@ -50,6 +50,11 @@ include('php/resetColors.php');
 		</div>
 	</div>
 
+	<div id="lose">
+		<p>You lost, mate.</p>
+		<a href=".."><button>Try again</button></a>
+	</div>
+	
 	<!-- Include scripts -->
 	<script src="js/script.js" type="text/javascript" charset="utf-8" async defer></script>
 </body>

@@ -120,6 +120,7 @@ function nextAttempt() {
 	for (var j = 0; j < length; j++) {
 		var old_element = holes[j];
 		var new_element = old_element.cloneNode(true);
+		new_element.setAttribute('draggable', 'false');
 		old_element.parentNode.replaceChild(new_element, old_element);
 	}
 	// Hide check button

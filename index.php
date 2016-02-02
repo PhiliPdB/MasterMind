@@ -54,7 +54,7 @@ include('php/resetColors.php');
 	<div id="dimmer"></div>
 	<div id="lose">
 		<p>You lost, mate.</p>
-		<div class="button raised" onclick="resetBoard()">
+		<div class="button raised" onclick="resetBoard(); hideLose();">
 			<div class="center" fit>Try again</div>
 			<paper-ripple fit></paper-ripple>
 		</div>

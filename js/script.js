@@ -326,6 +326,11 @@ function resetColors() {
 	request.send();
 }
 
+function hideLose() {
+	document.getElementById('lose').style.display = 'none';
+	document.getElementById('dimmer').style.display = 'none';
+}
+
 // This is a function from https://github.com/remy/html5demos
 var addEvent = (function () {
 	if (document.addEventListener) {

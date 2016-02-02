@@ -50,6 +50,7 @@ include('php/resetColors.php');
 		</div>
 	</div>
 
+	<div id="dimmer"></div>
 	<div id="lose">
 		<p>You lost, mate.</p>
 		<a href=".."><button>Try again</button></a>

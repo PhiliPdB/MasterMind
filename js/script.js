@@ -90,8 +90,8 @@ function handleColorValidation(validation) {
 		// TODO show solution
 	} else if (attempt + 1 == 12) {
 		// TODO show lose
-		var loseBox = document.getElementById('lose');
-		loseBox.style.display = 'block';
+		document.getElementById('lose').style.display = 'block';
+		document.getElementById('dimmer').style.display = 'block';
 	}
 }
 

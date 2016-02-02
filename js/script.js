@@ -38,6 +38,7 @@ function setDropTargets() {
 
 	var length = holes.length;
 	for (var i = 0; i < length; i++) {
+		if (holes[i].className.indexOf('little') > -1) continue;
 		setDropZone(holes[i]);
 	}
 }

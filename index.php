@@ -13,9 +13,10 @@
 			<div id="solution" class="row"></div>
 			<!-- Rows where you can guess the code -->
 			<?php 
-			for ($i=0; $i < 12; $i++) { 
+			$attempt_rows = 12;
+			for ($i=0; $i < $attempt_rows; $i++) { 
 				echo "<div id=\"row_" . $i . "\" class=\"row\">";
-				echo "<div class=\"attempt_number\">" . (12 - $i) . "</div>";
+				echo "<div class=\"attempt_number\">" . ($attempt_rows - $i) . "</div>";
 				// Put the pin holes here
 				for ($j=0; $j < 4; $j++) {
 					echo "<div id=\"hole_" . $j . "\" class=\"hole\"></div>";

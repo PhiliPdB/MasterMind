@@ -1,5 +1,6 @@
 @import 'variables';
 
+
 body, html, * {
 	margin: 0;
 	font-family: helvetica;
@@ -149,10 +150,23 @@ body {
 #lose {
 	display: none;
 	position: fixed;
+	right: 0;
+	left: 0;
 	top: 0;
-
+	bottom: 0;
+	width: 30vw;
+	height: 30vh;
+	margin: auto;
+	border: 1px solid white;
+	text-align: center;
 	p {
-		color: black;
+		color: $darker_white;
+		font-size: 28px;
+	}
+
+	button {
+		font-size: 24px;
+		margin-top: 25px;
 	}
 }
 

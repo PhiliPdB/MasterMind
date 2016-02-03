@@ -17,7 +17,9 @@ if ($_SESSION['colors'] == null) {
 		}
 	}
 	$_SESSION['colors'] = $colors;
-	$_SESSION['attemps'] = 0;
+	$_SESSION['attempts'] = 0;
+	$_SESSION['black'] = 0;
+	$_SESSION['white'] = 0;
 } else {
 	$colors = $_SESSION['colors'];
 }

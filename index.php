@@ -62,8 +62,8 @@ include('php/resetColors.php');
 	<div id="win" class="box">
 		<p>You won.</p>
 		<div id="upload_high_score">
-			<div class="group" id="nickname">
-				<input type="text" required>
+			<div class="group">
+				<input type="text" required id="nickname">
 				<span class="highlight"></span>
 				<span class="bar"></span>
 				<label>Nickname</label>

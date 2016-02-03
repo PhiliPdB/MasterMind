@@ -88,18 +88,20 @@ function handleColorValidation(validation) {
 	if (!won && attempt + 1 < 12) {
 		nextAttempt();
 	} else if (won) {
-		// TODO show solution
-		uploadHighScore();
+		// show solution
+		document.getElementById('win').style.display = 'block';
+		document.getElementById('dimmer').style.display = 'block';
 	} else if (attempt + 1 == 12) {
-		// TODO show lose
+		// show lose
 		document.getElementById('lose').style.display = 'block';
 		document.getElementById('dimmer').style.display = 'block';
 	}
 }
 
 function uploadHighScore() {
+	var username = document.getElementById('nickname').value;
 	var request = new XMLHttpRequest();
-	var params = 'username='; // TODO ask username
+	var params = 'username=' + username;
 	request.open('POST', 'php/uploadHighScore.php', true);
 
 	//Send the proper header information along with the request

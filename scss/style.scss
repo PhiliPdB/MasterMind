@@ -138,7 +138,7 @@ body {
 }
 
 #dimmer {
-	display: block;
+	display: none;
 	position: fixed;
 	top: 0;
 	right: 0;
@@ -173,7 +173,6 @@ body {
 }
 
 #win {
-	display: block;
 	width: 450px;
 
 	#upload_high_score {

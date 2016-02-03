@@ -3,7 +3,7 @@ require("connection.php");
 
 session_start();
 
-// $username = $connection->real_escape_string($_POST['username']);
+$username = $connection->real_escape_string($_POST['username']);
 $score = calculate_score($_SESSION['attempts'], $_SESSION['black'], $_SESSION['white']);
 
 if (strlen($username) <= 20 && $score > 0) {

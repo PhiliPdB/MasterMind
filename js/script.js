@@ -343,6 +343,11 @@ function hideLose() {
 	document.getElementById('dimmer').style.display = 'none';
 }
 
+function hideWin() {
+	document.getElementById('win').style.display = 'none';
+	document.getElementById('dimmer').style.display = 'none';
+}
+
 function getCookie(name) {
 	var value = '; ' + document.cookie;
 	var parts = value.split('; ' + name + '=');

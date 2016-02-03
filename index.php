@@ -52,9 +52,28 @@ include('php/resetColors.php');
 	</div>
 
 	<div id="dimmer"></div>
-	<div id="lose">
+	<div id="lose" class="box">
 		<p>You lost, mate.</p>
 		<div class="button raised" onclick="resetBoard(); hideLose();">
+			<div class="center" fit>Try again</div>
+			<paper-ripple fit></paper-ripple>
+		</div>
+	</div>
+	<div id="win" class="box">
+		<p>You won.</p>
+		<div id="upload_high_score">
+			<div class="group" id="nickname">
+				<input type="text" required>
+				<span class="highlight"></span>
+				<span class="bar"></span>
+				<label>Nickname</label>
+			</div>
+			<div class="button raised" onclick="resetBoard(); hideWin(); uploadHighScore();">
+				<div class="center" fit>Submit score</div>
+				<paper-ripple fit></paper-ripple>
+			</div>
+		</div>
+		<div class="button raised" onclick="resetBoard(); hideWin();">
 			<div class="center" fit>Try again</div>
 			<paper-ripple fit></paper-ripple>
 		</div>

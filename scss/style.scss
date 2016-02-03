@@ -1,6 +1,6 @@
 @import 'variables';
 @import 'buttons';
-
+@import 'inputs';
 
 body, html, * {
 	margin: 0;
@@ -138,7 +138,7 @@ body {
 }
 
 #dimmer {
-	display: none;
+	display: block;
 	position: fixed;
 	top: 0;
 	right: 0;
@@ -148,7 +148,7 @@ body {
 	opacity: .5;
 }
 
-#lose {
+.box {
 	display: none;
 	position: fixed;
 	right: 0;
@@ -163,6 +163,31 @@ body {
 	p {
 		color: $darker_white;
 		font-size: 28px;
+	}
+}
+
+#lose {
+	.button {
+		margin-top: 25px;
+	}
+}
+
+#win {
+	display: block;
+	width: 450px;
+
+	#upload_high_score {
+		margin-top: 25px;
+		// Flexbox setup
+		display: flex;
+		flex-flow: row nowrap;
+		justify-content: space-between;
+		align-items: center;
+		align-content: flex-start;
+
+		.button {
+			width: 130px;
+		}
 	}
 
 	.button {

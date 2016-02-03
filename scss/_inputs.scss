@@ -1,0 +1,95 @@
+$tint_color: $orange;
+$input_width: 300px;
+
+// Basic styling
+.group {
+	position: relative;
+}
+
+input {
+	font-size: 18px;
+	padding: 10px 10px 10px 5px;
+	display: block;
+	width: $input_width;
+	border: none;
+	border-bottom: 1px solid #757575;
+	background: transparent;
+	color: $darker_white;
+
+	&:focus {
+		border-color: transparent;
+		outline: none;
+	}
+
+	// Active label state
+	&:focus ~ label, &:valid ~ label {
+		top: -20px;
+		font-size: 14px;
+		color: $tint_color;
+	}
+
+	// Active bar state
+	&:focus ~ .bar:before, &:focus ~ .bar:after {
+		width: 50%;
+	}
+
+	// Active highlight state
+	input:focus ~ .highlight {
+		animation: inputHighlighter .3s ease;
+	}
+}
+
+// Labels
+label {
+	color: #999;
+	font-size: 18px;
+	font-weight: normal;
+	position: absolute;
+	pointer-events: none;
+	left: 5px;
+	top: 10px;
+	transition: .2s ease all;
+
+}
+
+// Bottom bars
+.bar {
+	position: relative;
+	display: block;
+	width: $input_width + 15px;
+
+	&:before, &:after {
+		content: '';
+		height: 2px;
+		width: 0;
+		bottom: 1px;
+		position: absolute;
+		background: $tint_color;
+		transition: .2s ease all;
+	}
+
+	&:before {
+		left: 50%;
+	}
+
+	&:after {
+		right: 50%;
+	}
+}
+
+// Highlighter
+.highlight {
+	position: absolute;
+	height: 60%;
+	width: $input_width / 3;
+	top: 25%;
+	left: 0;
+	pointer-events: none;
+	opacity: .5;
+}
+
+// Animations
+@keyframes inputHighlighter {
+	from { background: $tint_color; }
+	to { width: 0; background: transparent; }
+}

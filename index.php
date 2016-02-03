@@ -70,7 +70,7 @@ include('php/resetColors.php');
 				<span class="bar"></span>
 				<label>Nickname</label>
 			</div>
-			<div class="button raised" onclick="resetBoard(); hideWin(); uploadHighScore();">
+			<div class="button raised" onclick="uploadHighScore(); hideWin(); resetBoard();">
 				<div class="center" fit>Submit score</div>
 				<paper-ripple fit></paper-ripple>
 			</div>

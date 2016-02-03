@@ -1,5 +1,7 @@
 <?php 
-session_start();
+session_start([
+	"read_and_close" => true,
+]);
 
 function calculate_score($attempt, $black, $white) {
 	$output = 0;
@@ -16,5 +18,4 @@ function calculate_score($attempt, $black, $white) {
 }
 
 echo json_encode(array("score" => calculate_score($_SESSION['attempts'], $_SESSION['black'], $_SESSION['white'])));
-
  ?>

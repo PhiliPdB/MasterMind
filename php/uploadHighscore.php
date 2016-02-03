@@ -3,11 +3,6 @@ require("connection.php");
 
 session_start();
 
-ini_set('display_errors', 'On');
-
-var_dump($_POST);
-var_dump($_SESSION);
-
 $username = $connection->real_escape_string($_POST['username']);
 $score = calculate_score($_SESSION['attempts'], $_SESSION['black'], $_SESSION['white']);
 

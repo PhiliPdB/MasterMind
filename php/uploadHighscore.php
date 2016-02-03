@@ -3,6 +3,11 @@ require("connection.php");
 
 session_start();
 
+ini_set('display_errors', 'On');
+
+var_dump($_POST);
+var_dump($_SESSION);
+
 $username = $connection->real_escape_string($_POST['username']);
 $score = calculate_score($_SESSION['attempts'], $_SESSION['black'], $_SESSION['white']);
 
@@ -15,6 +20,8 @@ if (strlen($username) > 0 && strlen($username) <= 20 && $score > 0 && $_COOKIE['
 	// Upload highscore
 	$connection->query("INSERT INTO `highscores` (`nickname`, `score`) VALUES ('$username', '$score')");
 	setcookie("score", $score, time() + 3600 * 7 * 52);
+	setcookie("nickname", $username, time() + 3600 * 7 * 52);
+	echo "success";
 }
 
 function calculate_score($attempt, $black, $white) {

@@ -88,9 +88,23 @@ function handleColorValidation(validation) {
 	if (!won && attempt + 1 < 12) {
 		nextAttempt();
 	} else if (won) {
-		// show solution
+		// TODO show solution
 		document.getElementById('win').style.display = 'block';
 		document.getElementById('dimmer').style.display = 'block';
+
+		var request = new XMLHttpRequest();
+		request.open('POST', 'php/getScore.php', true);
+
+		request.onreadystatechange = function() {
+			if (request.readyState === XMLHttpRequest.DONE) {
+				if (request.status === 200) {
+					// Handle output
+					var response = JSON.parse(request.responseText);
+					document.getElementById('score').innerHTML = response.score;
+				}
+			}
+		};
+		request.send();
 	} else if (attempt + 1 == 12) {
 		// show lose
 		document.getElementById('lose').style.display = 'block';

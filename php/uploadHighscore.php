@@ -6,7 +6,7 @@ session_start();
 $username = $connection->real_escape_string($_POST['username']);
 $score = calculate_score($_SESSION['attempts'], $_SESSION['black'], $_SESSION['white']);
 
-if (strlen($username) <= 20 && $score > 0) {
+if (strlen($username) <= 20 && $score > 0 && $_COOKIE['score'] < $score) {
 	// Check if username already exists
 	$username_check = $connection->query("SELECT * FROM `highscores` WHERE `nickname` = '$username'")->fetch_array();
 	if (isset($username_check)) {

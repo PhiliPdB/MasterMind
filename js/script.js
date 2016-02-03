@@ -89,11 +89,23 @@ function handleColorValidation(validation) {
 		nextAttempt();
 	} else if (won) {
 		// TODO show solution
+		uploadHighScore();
 	} else if (attempt + 1 == 12) {
 		// TODO show lose
 		document.getElementById('lose').style.display = 'block';
 		document.getElementById('dimmer').style.display = 'block';
 	}
+}
+
+function uploadHighScore() {
+	var request = new XMLHttpRequest();
+	var params = 'username='; // TODO ask username
+	request.open('POST', 'php/uploadHighScore.php', true);
+
+	//Send the proper header information along with the request
+	request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+	request.send(params);
 }
 
 function nextAttempt() {
@@ -329,6 +341,12 @@ function resetColors() {
 function hideLose() {
 	document.getElementById('lose').style.display = 'none';
 	document.getElementById('dimmer').style.display = 'none';
+}
+
+function getCookie(name) {
+	var value = '; ' + document.cookie;
+	var parts = value.split('; ' + name + '=');
+	if (parts.length == 2) return parts.pop().split(';').shift();
 }
 
 // This is a function from https://github.com/remy/html5demos

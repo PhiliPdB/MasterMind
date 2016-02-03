@@ -17,6 +17,7 @@ if ($_SESSION['colors'] == null) {
 		}
 	}
 	$_SESSION['colors'] = $colors;
+	$_SESSION['attemps'] = 0;
 } else {
 	$colors = $_SESSION['colors'];
 }
@@ -32,11 +33,16 @@ for ($i=0; $i < 4; $i++) {
 	$currentInput[$i] = intval($currentInput[$i]);
 	// Check for black
 	if ($currentInput[$i] == $colors[$i]) {
-		$output["black"]++;
+		$output['black']++;
 	} else if (in_array($currentInput[$i], $colors)) {
-		$output["white"]++;
+		$output['white']++;
 	}
 }
+
+// Save scores to session
+$_SESSION['black'] += $output['black'];
+$_SESSION['white'] += $output['white'];
+$_SESSION['attempts']++;
 
 echo json_encode($output);
  ?>

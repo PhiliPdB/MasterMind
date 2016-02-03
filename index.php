@@ -9,7 +9,7 @@ include('php/resetColors.php');
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>Mastermind</title>
 	<link rel="stylesheet" href="css/style.css">
-	<link rel="import" href="https://www.polymer-project.org/0.5/components/paper-ripple/paper-ripple.html">
+	<link rel="import" href="https://www.polymer-project.org/1.0/components/paper-ripple/paper-ripple.html">
 </head>
 <body>
 	<div id="board">

@@ -65,7 +65,7 @@ include('php/resetColors.php');
 		</p>
 		<div id="upload_high_score">
 			<div class="group">
-				<input type="text" required id="nickname" maxlength="20">
+				<input type="text" required id="nickname" maxlength="20" value="<?=$_COOKIE['nickname']?>">
 				<span class="highlight"></span>
 				<span class="bar"></span>
 				<label>Nickname</label>

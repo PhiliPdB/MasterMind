@@ -238,6 +238,10 @@ function setDropZone(element) {
 					otherHole.className = otherHole.className.replace(
 						' color_' + data.color, ' ' + oldColorId
 					);
+					// Swap colors
+					var index1 = parseInt(this.id.replace('hole_', ''));
+					var index2 = parseInt(otherHole.id.replace('hole_', ''));
+					currentInput[index2] = currentInput[index1];
 
 					var otherHoleClone = otherHole.cloneNode(true);
 					// Set event listeners
@@ -258,6 +262,7 @@ function setDropZone(element) {
 			} else {
 				otherHole.className = 'hole';
 				otherHole.setAttribute('draggable', 'false');
+				currentInput[parseInt(otherHole.id.replace('hole_', ''))] = null;
 			}
 
 			id = 'color_' + data.color;
@@ -269,8 +274,7 @@ function setDropZone(element) {
 
 		// Save color
 		var index = parseInt(this.id.replace('hole_', ''));
-		var color = parseInt(el.id.replace('color_', ''));
-		currentInput[index] = color;
+		currentInput[index] = data.color;
 
 		// Make hole draggable
 		this.setAttribute('draggable', 'true');

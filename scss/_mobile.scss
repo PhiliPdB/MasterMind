@@ -13,13 +13,22 @@
 @media only screen and (max-width: 400px) {
 	#board {
 		flex-flow: column nowrap;
+		align-items: center;
 
 		.row {
 			justify-content: center;
 		}
 
 		#colors {
-			width: 100%;
+			width: 70%;
+		}
+	}
+}
+
+@media only screen and (max-width: 350px) {
+	#board {
+		#colors {
+			width: 90%;
 		}
 	}
 }

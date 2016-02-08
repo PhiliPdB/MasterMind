@@ -29,8 +29,8 @@ function setupAttemptRow() {
 	setDropTargets();
 	// Display check button
 	var checkButton = attemptRows[attempt].getElementsByClassName('check')[0];
-	checkButton.style.display = 'block';
 	checkButton.style.opacity = '1';
+	checkButton.style.pointerEvents = 'auto';
 }
 
 function setDropTargets() {
@@ -160,8 +160,8 @@ function nextAttempt() {
 	}
 	// Hide check button
 	var checkButton = attemptRows[attempt].getElementsByClassName('check')[0];
-	checkButton.style.display = 'none';
 	checkButton.style.opacity = '0';
+	checkButton.style.pointerEvents = 'none';
 
 	// Setup next row
 	attempt++;

@@ -78,7 +78,8 @@ body {
 			fill: $darker_white;
 			cursor: pointer;
 			opacity: 0;
-			display: none;
+			display: block;
+			pointer-events: none;
 		}
 
 		.hole {
@@ -193,6 +194,9 @@ body {
 		margin-top: 25px;
 	}
 }
+
+// Mobile styles
+@import 'mobile';
 
 // Setup the colors
 #color_0 { background: $red; }

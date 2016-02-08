@@ -1,0 +1,25 @@
+@media only screen and (max-width: 600px) {
+	$board_width_mobile: 100vw;
+
+	#board {
+		width: calc(#{$board_width_mobile} - 2 * #{$padding_unit});
+
+		#colors {
+			width: $board_width_mobile;
+		}
+	}
+}
+
+@media only screen and (max-width: 400px) {
+	#board {
+		flex-flow: column nowrap;
+
+		.row {
+			justify-content: center;
+		}
+
+		#colors {
+			width: 100%;
+		}
+	}
+}

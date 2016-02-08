@@ -2,6 +2,7 @@ var colorElements = document.getElementsByClassName('color');
 var attemptRows = [].slice.call(document.getElementsByClassName('row')).reverse();
 var currentInput = [null, null, null, null];
 var attempt = 0;
+var pointerElement;
 
 window.onload = function() {
 	setupAttemptRow();
@@ -22,6 +23,8 @@ window.onload = function() {
 			};
 			e.dataTransfer.setData('Text', JSON.stringify(data));
 		});
+
+		setupMobileDragDrop(element);
 	}
 };
 
@@ -278,6 +281,40 @@ function setDropZone(element) {
 			};
 			e.dataTransfer.setData('Text', JSON.stringify(data));
 		});
+	});
+}
+
+function setupMobileDragDrop(color) {
+	addEvent(color, 'touchstart', function (event) {
+		console.log('touchstart');
+		pointerElement = color.cloneNode(false);
+		pointerElement.style.position = 'absolute';
+		pointerElement.style.width = "40px";
+		pointerElement.style.height = "40px";
+		pointerElement.style.borderRadius = "20px";
+		pointerElement.style.boxShadow = "0 0 10px #212121";
+		pointerElement.style.zIndex = 1000;
+		document.body.appendChild(pointerElement);
+		if (event.targetTouches.length == 1) {
+			var touch = event.targetTouches[0];
+			pointerElement.style.left = touch.pageX - 20 + 'px';
+			pointerElement.style.top = touch.pageY - 20 + 'px';
+		}
+	});
+
+	addEvent(color, 'touchmove', function (event) {
+		console.log('touchmove');
+		if (event.targetTouches.length == 1) {
+			event.preventDefault();
+			var touch = event.targetTouches[0];
+			pointerElement.style.left = touch.pageX - 20 + 'px';
+			pointerElement.style.top = touch.pageY - 20 + 'px';
+		}
+	});
+
+	addEvent(color, 'touchend', function (event) {
+		console.log('touchend');
+		document.body.removeChild(pointerElement);
 	});
 }
 

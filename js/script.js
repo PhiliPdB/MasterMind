@@ -171,19 +171,8 @@ function nextAttempt() {
 function setDropZone(element) {
 	addEvent(element, 'dragover', function (e) {
 		if (e.preventDefault()) e.preventDefault();
-		// if (this.className.indexOf(' over') > -1) this.className += ' over';
 		e.dataTransfer.dropEffect = 'copy';
 		return false;
-	});
-
-	// to get IE to work
-	addEvent(element, 'dragenter', function (e) {
-		// if (this.className.indexOf(' over') > -1) this.className += ' over';
-		return false;
-	});
-
-	addEvent(element, 'dragleave', function () {
-		// this.className.replace(' over', '');
 	});
 
 	addEvent(element, 'drop', function (e) {

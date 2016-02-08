@@ -182,7 +182,7 @@ function setDropZone(element) {
 		if (e.stopPropagation) e.stopPropagation(); // stops the browser from redirecting...why???
 		
 		var data = JSON.parse(e.dataTransfer.getData('Text'));
-		var el;
+		var el, classNameArray, classNameArrayLength, oldColorId, i;
 		var id = data.id;
 		if (!data.fromHole) {
 			// Make the color not draggable anymore
@@ -192,11 +192,11 @@ function setDropZone(element) {
 
 			// Check if hole was filled before
 			if (this.className.indexOf('color') > -1) {
-				var classNameArray = this.className.split(' ');
+				classNameArray = this.className.split(' ');
 
-				var oldColorId = null;
-				var classNameArrayLength = classNameArray.length;
-				for (var i = 0; i < classNameArrayLength; i++) {
+				oldColorId = null;
+				classNameArrayLength = classNameArray.length;
+				for (i = 0; i < classNameArrayLength; i++) {
 					if (classNameArray[i].indexOf('color') > -1) {
 						oldColorId = classNameArray[i];
 						break;
@@ -213,11 +213,11 @@ function setDropZone(element) {
 			var otherHole = attemptRows[attempt].getElementsByClassName(data.class)[0];
 			// Check if hole was filled before
 			if (this.className.indexOf('color') > -1) {
-				var classNameArray = this.className.split(' ');
+				classNameArray = this.className.split(' ');
 
-				var oldColorId = null;
-				var classNameArrayLength = classNameArray.length;
-				for (var i = 0; i < classNameArrayLength; i++) {
+				oldColorId = null;
+				classNameArrayLength = classNameArray.length;
+				for (i = 0; i < classNameArrayLength; i++) {
 					if (classNameArray[i].indexOf('color') > -1) {
 						oldColorId = classNameArray[i];
 						break;

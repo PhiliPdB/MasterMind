@@ -6,9 +6,17 @@
 	"repository": "PhiliPdB/MasterMind",
 	"devDependencies": {
 	  	"gulp": "^3.9.0",
+	  	"gulp-util": "^3.0.7",
 	  	"gulp-sass": "^2.1.0",
 	  	"gulp-autoprefixer": "^3.1.0",
+	  	"gulp-concat": "^2.6.0",
+	  	"gulp-sourcemaps": "^1.6.0",
+	  	"gulp-uglify": "^1.5.2",
+	  	"gulp-imagemin": "^2.4.0",
 	  	"browser-sync": "^2.11.1",
-	  	"gulp-connect-php": "^0.0.7"
+	  	"gulp-connect-php": "^0.0.7",
+	  	"jshint": "^2.9.1",
+	  	"gulp-jshint": "^2.0.0",
+	  	"jshint-stylish": "^2.1.0"
 	}
 }

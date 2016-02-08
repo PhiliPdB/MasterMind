@@ -1,4 +1,6 @@
-# Ignore generated css
+# Ignore build directory
+build/
+# Ignore old generated css directory
 css/
 
 # Logs

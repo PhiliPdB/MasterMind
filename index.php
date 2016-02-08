@@ -11,7 +11,7 @@ include('php/resetColors.php');
 	
 	<title>Mastermind</title>
 	
-	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="build/css/style.css">
 	<link rel="import" href="https://www.polymer-project.org/1.0/components/paper-ripple/paper-ripple.html">
 </head>
 <body>
@@ -85,6 +85,6 @@ include('php/resetColors.php');
 	</div>
 	
 	<!-- Include scripts -->
-	<script src="js/script.js" type="text/javascript" charset="utf-8" async defer></script>
+	<script src="build/js/script.js" type="text/javascript" charset="utf-8" async defer></script>
 </body>
 </html>

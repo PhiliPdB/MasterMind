@@ -1,15 +1,29 @@
 'use strict';
 
 var gulp = require('gulp');
+var gutil = require('gulp-util')
 var phpConnect = require('gulp-connect-php');
 var browserSync = require('browser-sync');
 var sass = require('gulp-sass');
 var autoprefixer = require('gulp-autoprefixer');
+var jsHint = require('gulp-jshint');
+var concat = require('gulp-concat');
+var sourcemaps = require('gulp-sourcemaps');
+var uglify = require('gulp-uglify');
+var imagemin = require('gulp-imagemin');
 
 var paths = {
 	styles: {
 		src: 'scss/**/*.scss',
-		dest: 'css/'
+		dest: 'build/css/'
+	},
+	scripts: {
+		src: 'js/**/*.js',
+		dest: 'build/js/'
+	},
+	images: {
+		src: 'images/**/*.*',
+		dest: 'build/images/'
 	}
 };
 
@@ -19,7 +33,11 @@ var liveReloadFiles = [
 	'js/**/*.js'
 ];
 
-gulp.task('default', ['serve', 'scss', 'scss_watch']);
+gulp.task('default', ['serve', 'scss'], function() {
+	// watches
+	gulp.watch(paths.styles.src, ['scss']);
+	gulp.watch(paths.scripts.src, ['jshint', 'build-js']);
+});
 gulp.task('serve', ['connect', 'browser-sync']);
 
 // server config
@@ -54,16 +72,41 @@ gulp.task('browser-sync', function() {
 	});
 });
 
-// scss stuff
-gulp.task('scss_watch', function() {
-	gulp.watch(paths.styles.src, ['scss']);
+// build all
+gulp.task('build', ['scss', 'build-js'], function() {
+	gulp.src(paths.images.src)
+		.pipe(imagemin({
+			progressive: true
+		}))
+		.pipe(gulp.dest(paths.images.dest));
 });
 
+// scss stuff
 gulp.task('scss', function() {
 	gulp.src(paths.styles.src)
 		.pipe(sass().on('error', sass.logError))
 		.pipe(autoprefixer())
 		.pipe(gulp.dest(paths.styles.dest))
+		.pipe(browserSync.reload({
+			stream: true
+		}));
+});
+
+// js stuff
+gulp.task('jshint', function() {
+	gulp.src(paths.scripts.src)
+		.pipe(jsHint())
+		.pipe(jsHint.reporter('jshint-stylish'));
+});
+
+gulp.task('build-js', function() {
+	gulp.src(paths.scripts.src)
+		.pipe(sourcemaps.init())
+		.pipe(concat('script.js'))
+		//only uglify if gulp is ran with '--type production'
+		.pipe(gutil.env.type === 'production' ? uglify() : gutil.noop())
+		.pipe(sourcemaps.write())
+		.pipe(gulp.dest(paths.scripts.dest))
 		.pipe(browserSync.reload({
 			stream: true
 		}));

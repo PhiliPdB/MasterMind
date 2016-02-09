@@ -8,6 +8,22 @@
 			width: $board_width_mobile;
 		}
 	}
+
+	.box {
+		width: 50vw;
+		height: 50vh;
+	}
+}
+
+@media only screen and (max-width: 500px) {
+	.box {
+		width: 80vw;
+		height: 80vh;
+	}
+
+	#win {
+		width: 350px;
+	}
 }
 
 @media only screen and (max-width: 400px) {
@@ -22,6 +38,12 @@
 		#colors {
 			width: 70%;
 		}
+	}
+}
+
+@media only screen and (max-width: 360px) {
+	#win {
+		width: 300px;
 	}
 }
 

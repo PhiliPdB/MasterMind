@@ -93,3 +93,39 @@ $input_width: 300px;
 		to { width: 0; background: transparent; }
 	}
 }
+
+@media only screen and (max-width: 500px) {
+	$mobile_width: 200px;
+
+	.group {
+		input {
+			width: $mobile_width;
+		}
+
+		.bar {
+			width: $mobile_width + 15px;
+		}
+
+		.highlight {
+			width: $mobile_width / 3;
+		}
+	}
+}
+
+@media only screen and (max-width: 360px) {
+	$mobile_width: 150px;
+
+	.group {
+		input {
+			width: $mobile_width;
+		}
+
+		.bar {
+			width: $mobile_width + 15px;
+		}
+
+		.highlight {
+			width: $mobile_width / 3;
+		}
+	}
+}

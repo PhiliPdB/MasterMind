@@ -5,6 +5,8 @@
 body, html, * {
 	margin: 0;
 	font-family: helvetica;
+	user-select: none;
+	cursor: default;
 	// Transitions
 	transition: background $timing;
 	transition: opacity $timing;
@@ -182,7 +184,7 @@ body {
 		display: flex;
 		flex-flow: row nowrap;
 		justify-content: space-between;
-		align-items: baseline;
+		align-items: center;
 		align-content: flex-start;
 
 		.button {

@@ -8,7 +8,6 @@ var sass = require('gulp-sass');
 var autoprefixer = require('gulp-autoprefixer');
 var jsHint = require('gulp-jshint');
 var concat = require('gulp-concat');
-var sourcemaps = require('gulp-sourcemaps');
 var uglify = require('gulp-uglify');
 var imagemin = require('gulp-imagemin');
 
@@ -29,8 +28,8 @@ var paths = {
 
 var liveReloadFiles = [
 	'index.php',
-	'css/**/*.css',
-	'js/**/*.js'
+	'build/css/**/*.css',
+	'build/js/**/*.js'
 ];
 
 gulp.task('default', ['serve', 'scss'], function() {
@@ -101,11 +100,9 @@ gulp.task('jshint', function() {
 
 gulp.task('build-js', function() {
 	gulp.src(paths.scripts.src)
-		.pipe(sourcemaps.init())
 		.pipe(concat('script.js'))
 		//only uglify if gulp is ran with '--type production'
 		.pipe(gutil.env.type === 'production' ? uglify() : gutil.noop())
-		.pipe(sourcemaps.write())
 		.pipe(gulp.dest(paths.scripts.dest))
 		.pipe(browserSync.reload({
 			stream: true

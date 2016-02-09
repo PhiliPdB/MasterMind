@@ -335,10 +335,10 @@ function resetBoard() {
 		// Hide check button
 		var checkButton = attemptRows[j].getElementsByClassName('check')[0];
 		if (j === 0) {
-			checkButton.style.display = 'block';
+			checkButton.style.pointerEvents = 'auto';
 			checkButton.style.opacity = '1';
 		} else {
-			checkButton.style.display = 'none';
+			checkButton.style.pointerEvents = 'none';
 			checkButton.style.opacity = '0';
 		}
 	}

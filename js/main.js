@@ -214,6 +214,7 @@ function setDropZone(element) {
 			}
 		} else {
 			var otherHole = attemptRows[attempt].getElementsByClassName(data.class)[0];
+			var otherHoleClone;
 			// Check if hole was filled before
 			if (this.className.indexOf('color') > -1) {
 				classNameArray = this.className.split(' ');
@@ -237,7 +238,7 @@ function setDropZone(element) {
 					var index2 = parseInt(otherHole.id.replace('hole_', ''));
 					currentInput[index2] = currentInput[index1];
 
-					var otherHoleClone = otherHole.cloneNode(true);
+					otherHoleClone = otherHole.cloneNode(true);
 					// Set event listeners
 					setDropZone(otherHoleClone);
 					addEvent(otherHoleClone, 'dragstart', function (e) {
@@ -250,7 +251,8 @@ function setDropZone(element) {
 						};
 						e.dataTransfer.setData('Text', JSON.stringify(data));
 					});
-					// TODO Add mobile touch event
+					// Add mobile touch event
+					setupTouchDragHole(otherHoleClone, document.getElementById(oldColorId));
 					// Replace
 					otherHole.parentNode.replaceChild(otherHoleClone, otherHole);
 				}
@@ -258,6 +260,11 @@ function setDropZone(element) {
 				otherHole.className = 'hole';
 				otherHole.setAttribute('draggable', 'false');
 				currentInput[parseInt(otherHole.id.replace('hole_', ''))] = null;
+				otherHoleClone = otherHole.cloneNode(true);
+				// Set event listeners
+				setDropZone(otherHoleClone);
+				// Replace
+				otherHole.parentNode.replaceChild(otherHoleClone, otherHole);
 			}
 
 			id = 'color_' + data.color;
@@ -284,7 +291,8 @@ function setDropZone(element) {
 			};
 			e.dataTransfer.setData('Text', JSON.stringify(data));
 		});
-		// TODO make draggable on mobile devices
+		// Make draggable on mobile devices
+		setupTouchDragHole(this, el);
 	});
 }
 

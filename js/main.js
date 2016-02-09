@@ -186,9 +186,10 @@ function setDropZone(element) {
 		var id = data.id;
 		if (!data.fromHole) {
 			// Make the color not draggable anymore
-			el = document.getElementById(data.id);
+			el = document.getElementById(id);
 			el.setAttribute('draggable', 'false');
 			el.style.opacity = '.5';
+			removeEventListeners(el);
 
 			// Check if hole was filled before
 			if (this.className.indexOf('color') > -1) {
@@ -207,6 +208,7 @@ function setDropZone(element) {
 					var oldColorElement = document.getElementById(oldColorId);
 					oldColorElement.setAttribute('draggable', 'true');
 					oldColorElement.style.opacity = '1';
+					setupMobileDragDrop(oldColorElement);
 				}
 			}
 		} else {
@@ -247,6 +249,7 @@ function setDropZone(element) {
 						};
 						e.dataTransfer.setData('Text', JSON.stringify(data));
 					});
+					// TODO Add mobile touch event
 					// Replace
 					otherHole.parentNode.replaceChild(otherHoleClone, otherHole);
 				}
@@ -280,6 +283,7 @@ function setDropZone(element) {
 			};
 			e.dataTransfer.setData('Text', JSON.stringify(data));
 		});
+		// TODO make draggable on mobile devices
 	});
 }
 
@@ -359,10 +363,9 @@ function hideWin() {
 	document.getElementById('dimmer').style.display = 'none';
 }
 
-function getCookie(name) {
-	var value = '; ' + document.cookie;
-	var parts = value.split('; ' + name + '=');
-	if (parts.length == 2) return parts.pop().split(';').shift();
+function removeEventListeners(element) {
+	var newElement = element.cloneNode(true);
+	element.parentNode.replaceChild(newElement, element);
 }
 
 function getPosition(element) {

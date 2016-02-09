@@ -54,6 +54,10 @@ function setupMobileDragDrop(color) {
 			}
 		}
 	});
+
+	addEvent(color, 'touchcancel', function (event) {
+		document.body.removeChild(pointerElement);
+	});
 }
 
 function handleTouchDrop(hole) {

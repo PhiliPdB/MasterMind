@@ -150,6 +150,7 @@ function nextAttempt() {
 			};
 			e.dataTransfer.setData('Text', JSON.stringify(data));
 		});
+		setupMobileDragDrop(element);
 	}
 	// Remove event listeners
 	var holes = attemptRows[attempt].getElementsByClassName('hole');
@@ -304,7 +305,6 @@ function resetBoard() {
 		element.setAttribute('draggable', 'true');
 		element.style.opacity = '1';
 
-
 		addEvent(element, 'dragstart', function (e) {
 			e.dataTransfer.effectAllowed = 'copy';
 			var data = {
@@ -314,6 +314,7 @@ function resetBoard() {
 			};
 			e.dataTransfer.setData('Text', JSON.stringify(data));
 		});
+		setupMobileDragDrop(element);
 	}
 	// Remove event listeners and reset colors
 	var attemptRowLength = attemptRows.length - 1;

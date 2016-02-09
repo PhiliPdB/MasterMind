@@ -4,6 +4,8 @@
 	"description": "School assignment",
 	"author": "PhiliPdB <phlpdbrn@gmail.com>",
 	"repository": "PhiliPdB/MasterMind",
+	"bugs": "https://github.com/PhiliPdB/MasterMind/issues",
+	"license": "UNLICENSED",
 	"devDependencies": {
 	  	"gulp": "^3.9.0",
 	  	"gulp-util": "^3.0.7",

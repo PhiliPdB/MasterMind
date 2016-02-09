@@ -32,12 +32,14 @@ var liveReloadFiles = [
 	'build/js/**/*.js'
 ];
 
-gulp.task('default', ['serve', 'scss'], function() {
-	// watches
+gulp.task('default', ['serve', 'watch']);
+
+gulp.task('serve', ['connect', 'browser-sync']);
+
+gulp.task('watch', function() {
 	gulp.watch(paths.styles.src, ['scss']);
 	gulp.watch(paths.scripts.src, ['jshint', 'build-js']);
 });
-gulp.task('serve', ['connect', 'browser-sync']);
 
 // server config
 gulp.task('connect', function() {

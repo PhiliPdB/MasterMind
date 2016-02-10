@@ -3,10 +3,6 @@
 
 	#board {
 		width: calc(#{$board_width_mobile} - 2 * #{$padding_unit});
-
-		#colors {
-			width: $board_width_mobile;
-		}
 	}
 }
 
@@ -15,10 +11,6 @@
 
 	#board {
 		width: calc(#{$board_width_mobile} - 2 * #{$padding_unit});
-
-		#colors {
-			width: $board_width_mobile;
-		}
 	}
 
 	.box {

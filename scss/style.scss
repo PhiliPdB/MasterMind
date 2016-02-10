@@ -45,81 +45,88 @@ body {
 	// Shadow
 	box-shadow: 0 0 10px $shadow;
 
-	.row {
-		margin: 0 auto;
-		// Flexbox setup
-		display: flex;
-		flex-flow: row nowrap;
-		justify-content: flex-start;
-		align-items: center;
-		align-content: center;
+	#rows {
+		$basis: calc(12 * #{$color_radius} + 1.25em + 7 * #{$padding_unit});
+		flex: 0 0 $basis;
 
-		.attempt_number {
-			text-align: right;
-			vertical-align: middle;
-			height: $color_radius * 2;
-			width: 1.25em;
-			line-height: $color_radius * 2;
-			margin: $padding_unit / 2;
-			color: $darker_white;
-			user-select: none;
-		}
-
-		.little_holes {
-			width: $color_radius * 2;
-			margin-left: $padding_unit / 2;
+		.row {
+			margin: 0 auto;
 			// Flexbox setup
 			display: flex;
-			flex-flow: row wrap;
+			flex-flow: row nowrap;
 			justify-content: flex-start;
 			align-items: center;
 			align-content: center;
+
+			.attempt_number {
+				text-align: right;
+				vertical-align: middle;
+				height: $color_radius * 2;
+				width: 1.25em;
+				line-height: $color_radius * 2;
+				margin: $padding_unit / 2;
+				color: $darker_white;
+				user-select: none;
+			}
+
+			.little_holes {
+				width: $color_radius * 2;
+				margin: $padding_unit / 2;
+				// Flexbox setup
+				display: flex;
+				flex-flow: row wrap;
+				justify-content: flex-start;
+				align-items: center;
+				align-content: center;
+			}
+
+			.check {
+				width: $color_radius * 2;
+				height: $color_radius * 2;
+				padding: $padding_unit / 2;
+				fill: $darker_white;
+				cursor: pointer;
+				opacity: 0;
+				display: block;
+				pointer-events: none;
+			}
+
+			.hole {
+				width: $color_radius * 2;
+				height: $color_radius * 2;
+				border-radius: $color_radius;
+				background: $grey;
+				margin: $padding_unit / 2;
+
+				box-shadow: inset 0 0 5px $shadow;
+
+				&.filled {
+					box-shadow: 0 0 10px $shadow;
+				}
+
+				&.little {
+					width: $color_radius * .8;
+					height: $color_radius * .8;
+					border-radius: $color_radius * .8;
+					margin: $color_radius * .1;
+				}
+
+				&.color_0 { background: $red; }
+				&.color_1 { background: $green; }
+				&.color_2 { background: $blue; }
+				&.color_3 { background: $yellow; }
+				&.color_4 { background: $orange; }
+				&.color_5 { background: $pink; }
+				&.color_6 { background: white; }
+				&.color_7 { background: black; }
+
+				&.little.black { background: black; }
+				&.little.white { background: white; }
+			}
 		}
-
-		.check {
-			fill: $darker_white;
-			cursor: pointer;
-			opacity: 0;
-			display: block;
-			pointer-events: none;
-		}
-
-		.hole {
-			width: $color_radius * 2;
-			height: $color_radius * 2;
-			border-radius: $color_radius;
-			background: $grey;
-			margin: $padding_unit / 2;
-
-			box-shadow: inset 0 0 5px $shadow;
-		}
-
-		.hole.filled {
-			box-shadow: 0 0 10px $shadow;
-		}
-
-		.hole.little {
-			width: $color_radius * .8;
-			height: $color_radius * .8;
-			border-radius: $color_radius * .8;
-			margin: $color_radius * .1;
-		}
-
-		.hole.color_0 { background: $red; }
-		.hole.color_1 { background: $green; }
-		.hole.color_2 { background: $blue; }
-		.hole.color_3 { background: $yellow; }
-		.hole.color_4 { background: $orange; }
-		.hole.color_5 { background: $pink; }
-		.hole.color_6 { background: white; }
-		.hole.color_7 { background: black; }
-
-		.hole.little.black { background: black; }
-		.hole.little.white { background: white; }
 	}
 
 	#colors {
-		width: $board_width;
 		padding: 0;
 		margin: 0;
 		// Flexbox setup

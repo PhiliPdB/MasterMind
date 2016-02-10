@@ -46,15 +46,15 @@ gulp.task('connect', function() {
 	// PHP server (will be proxied)
 	phpConnect.server({
 		base: './',
-		hostname: '127.0.0.1',
-		port: 8000
+		hostname: '0.0.0.0',
+		port: 6000
 	});
 
 	// Another server for phpMyAdmin, since connect-php doesn't support multiple bases
 	phpConnect.server({
 		base: 'phpmyadmin',
 		open: false,
-		hostname: '127.0.0.1',
+		hostname: '0.0.0.0',
 		port: 1337
 	});
 });
@@ -62,9 +62,15 @@ gulp.task('connect', function() {
 gulp.task('browser-sync', function() {
 	browserSync({
 		files: liveReloadFiles,
-		proxy: '127.0.0.1:8000',
+		proxy: 'localhost:6000',
     	port: 8080,
-    	open: false
+    	open: false,
+    	ui: {
+    		port: 3001,
+    		weinre: {
+    			port: 8000
+    		}
+    	}
 	}, function (err, bs) {
 		if (err)
 			console.log(err);

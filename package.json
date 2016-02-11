@@ -3,7 +3,7 @@
 	"version": "0.0.1",
 	"description": "School assignment",
 	"author": "PhiliPdB <phlpdbrn@gmail.com>",
-	"repository": "PhiliPdB/MasterMind",
+	"repository": "https://github.com/PhiliPdB/MasterMind",
 	"bugs": "https://github.com/PhiliPdB/MasterMind/issues",
 	"license": "UNLICENSED",
 	"devDependencies": {

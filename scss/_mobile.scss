@@ -35,12 +35,26 @@
 		flex-flow: column nowrap;
 		align-items: center;
 
-		.row {
-			justify-content: center;
+		#rows {
+			margin-bottom: 112px;
+			
+			.row {
+				justify-content: center;
+			}
 		}
 
 		#colors {
 			width: 70%;
+			padding: 0 15%;
+			position: fixed;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			box-shadow: 0 0 10px $shadow;
+
+			background: #8b5a2b;
+			background-image: url("../images/wood.png");
+			background-repeat: repeat;
 		}
 	}
 }

@@ -6,7 +6,7 @@
 	}
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 700px) {
 	$board_width_mobile: 100vw;
 
 	#board {
@@ -19,7 +19,17 @@
 	}
 }
 
-@media only screen and (max-width: 500px) {
+@media only screen and (max-width: 520px) {
+	#board {
+		#right {
+			justify-content: space-around;
+
+			#highscores {
+				display: none;
+			}
+		}
+	}
+
 	.box {
 		width: 80vw;
 		height: 80vh;
@@ -43,18 +53,20 @@
 			}
 		}
 
-		#colors {
-			width: 70%;
-			padding: 0 15%;
-			position: fixed;
-			bottom: 0;
-			left: 0;
-			right: 0;
-			box-shadow: 0 0 10px $shadow;
+		#right {
+			#colors {
+				width: 70%;
+				padding: 0 15%;
+				position: fixed;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				box-shadow: 0 0 10px $shadow;
 
-			background: #8b5a2b;
-			background-image: url("../images/wood.png");
-			background-repeat: repeat;
+				background: #8b5a2b;
+				background-image: url("../images/wood.png");
+				background-repeat: repeat;
+			}
 		}
 	}
 }

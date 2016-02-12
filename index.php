@@ -1,6 +1,8 @@
 <?php
 // Reset color code
 include('php/resetColors.php');
+// Get the highscores
+include('php/getHighscores.php');
  ?>
 <!DOCTYPE html>
 <html>
@@ -43,14 +45,39 @@ include('php/resetColors.php');
 			}
 			 ?>
 		</div>
-		<!-- Color selection -->
-		<div id="colors">
-			<!-- Different colors you can choose -->
-			<?php 
-			for ($i=0; $i < 8; $i++) { 
-				echo "<div id=\"color_" . $i . "\" class=\"color\"></div>";
-			}
-			 ?>
+		<div id="right">
+			<!-- Highscores table -->
+			<table id="highscores">
+				<thead>
+					<tr>
+						<th></th>
+						<th>Name</th>
+						<th>Score</th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php 
+					for ($i=1; $i <= sizeof($scores); $i++) {
+						echo "<tr>";
+						echo "<td>$i</td>";
+						foreach ($scores[$i-1] as $key => $value) {
+							echo "<td>$value</td>";
+						}
+						echo "</tr>";
+					}
+					 ?>
+				</tbody>
+			</table>
+
+			<!-- Color selection -->
+			<div id="colors">
+				<!-- Different colors you can choose -->
+				<?php 
+				for ($i=0; $i < 8; $i++) { 
+					echo "<div id=\"color_" . $i . "\" class=\"color\"></div>";
+				}
+				 ?>
+			</div>
 		</div>
 	</div>
 

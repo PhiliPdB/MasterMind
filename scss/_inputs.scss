@@ -12,9 +12,11 @@ $input_width: 300px;
 		width: $input_width;
 		border: none;
 		border-bottom: 1px solid #757575;
+		border-radius: 0;
 		background: transparent;
 		color: $darker_white;
 		cursor: text;
+		user-select: text;
 
 		&:focus {
 			border-color: transparent;

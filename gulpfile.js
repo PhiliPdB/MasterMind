@@ -29,7 +29,8 @@ var paths = {
 var liveReloadFiles = [
 	'index.php',
 	'build/css/**/*.css',
-	'build/js/**/*.js'
+	'build/js/**/*.js',
+	'build/images/**/*.*'
 ];
 
 gulp.task('default', ['serve', 'watch']);
@@ -39,9 +40,10 @@ gulp.task('serve', ['connect', 'browser-sync']);
 gulp.task('watch', function() {
 	gulp.watch(paths.styles.src, ['scss']);
 	gulp.watch(paths.scripts.src, ['jshint', 'build-js']);
+	gulp.watch(paths.images.src, ['minify-images']);
 });
 
-// server config
+// Start the server
 gulp.task('connect', function() {
 	// PHP server (will be proxied)
 	phpConnect.server({
@@ -79,14 +81,8 @@ gulp.task('browser-sync', function() {
 	});
 });
 
-// build all
-gulp.task('build', ['scss', 'build-js'], function() {
-	gulp.src(paths.images.src)
-		.pipe(imagemin({
-			progressive: true
-		}))
-		.pipe(gulp.dest(paths.images.dest));
-});
+// Build all
+gulp.task('build', ['scss', 'build-js', 'minify-images']);
 
 // scss stuff
 gulp.task('scss', function() {
@@ -99,7 +95,7 @@ gulp.task('scss', function() {
 		}));
 });
 
-// js stuff
+// JS stuff
 gulp.task('jshint', function() {
 	gulp.src(paths.scripts.src)
 		.pipe(jsHint())
@@ -109,10 +105,19 @@ gulp.task('jshint', function() {
 gulp.task('build-js', function() {
 	gulp.src(paths.scripts.src)
 		.pipe(concat('script.js'))
-		//only uglify if gulp is ran with '--type production'
+		// Only uglify if gulp is ran with '--type production'
 		.pipe(gutil.env.type === 'production' ? uglify() : gutil.noop())
 		.pipe(gulp.dest(paths.scripts.dest))
 		.pipe(browserSync.reload({
 			stream: true
 		}));
+});
+
+// Images
+gulp.task('minify-images', function () {
+	gulp.src(paths.images.src)
+		.pipe(imagemin({
+			progressive: true
+		}))
+		.pipe(gulp.dest(paths.images.dest));
 });

@@ -46,7 +46,7 @@ body {
 	box-shadow: 0 0 10px $shadow;
 
 	#rows {
-		$basis: calc(12 * #{$color_radius} + 1.25em + 7 * #{$padding_unit});
+		$basis: calc(12 * #{$color_radius} + #{$number_width} + 7 * #{$padding_unit});
 		flex: 0 0 $basis;
 
 		.row {
@@ -62,7 +62,7 @@ body {
 				text-align: right;
 				vertical-align: middle;
 				height: $color_radius * 2;
-				width: 1.25em;
+				width: $number_width;
 				line-height: $color_radius * 2;
 				margin: $padding_unit / 2;
 				color: $darker_white;
@@ -137,7 +137,7 @@ body {
 		#highscores {
 			color: white;
 			text-align: left;
-			font-size: 1.25em;
+			font-size: $number_width;
 			width: 100%;
 			border-collapse: collapse;
 
@@ -150,6 +150,7 @@ body {
 
 				&:nth-child(1) {
 					text-align: right;
+					width: $number_width;
 				}
 
 				&:nth-child(-n+2) {

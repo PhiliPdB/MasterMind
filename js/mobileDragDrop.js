@@ -158,20 +158,25 @@ function handleTouchDrop(hole) {
 	currentInput[index] = dragData.color;
 
 	// Make hole draggable
-	hole.setAttribute('draggable', 'true');
-
-	addEvent(hole, 'dragstart', function (e) {
+	// Remove 'old' event listeners
+	var holeClone = hole.cloneNode(true);
+	// Add 'new' event listeners
+	holeClone.setAttribute('draggable', 'true');
+	setDropZone(holeClone);
+	addEvent(holeClone, 'dragstart', function (e) {
 		e.dataTransfer.effectAllowed = 'copy';
 		var data = {
-			id: hole.id,
-			class: hole.className,
+			id: holeClone.id,
+			class: holeClone.className,
 			color: parseInt(el.id.replace('color_', '')),
 			fromHole: true
 		};
 		e.dataTransfer.setData('Text', JSON.stringify(data));
 	});
 	// Make draggable on mobile devices
-	setupTouchDragHole(hole, el);
+	setupTouchDragHole(holeClone, el);
+	// Replace
+	hole.parentNode.replaceChild(holeClone, hole);
 }
 
 function setupTouchDragHole(hole, color) {

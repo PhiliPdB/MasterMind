@@ -280,20 +280,25 @@ function setDropZone(element) {
 		currentInput[index] = data.color;
 
 		// Make hole draggable
-		this.setAttribute('draggable', 'true');
-
-		addEvent(this, 'dragstart', function (e) {
+		// Remove 'old' event listeners
+		var holeClone = this.cloneNode(true);
+		// Add 'new' event listeners
+		holeClone.setAttribute('draggable', 'true');
+		setDropZone(holeClone);
+		addEvent(holeClone, 'dragstart', function (e) {
 			e.dataTransfer.effectAllowed = 'copy';
 			var data = {
-				id: this.id,
-				class: this.className,
+				id: holeClone.id,
+				class: holeClone.className,
 				color: parseInt(el.id.replace('color_', '')),
 				fromHole: true
 			};
 			e.dataTransfer.setData('Text', JSON.stringify(data));
 		});
 		// Make draggable on mobile devices
-		setupTouchDragHole(this, el);
+		setupTouchDragHole(holeClone, el);
+		// Replace
+		this.parentNode.replaceChild(holeClone, this);
 	});
 }
 

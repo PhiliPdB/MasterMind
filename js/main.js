@@ -9,23 +9,25 @@ window.onload = function() {
 	// Make the colors draggable
 	var colorElementsSize = colorElements.length;
 	for (var i = 0; i < colorElementsSize; i++) {
-		var element = colorElements[i];
-
-		element.setAttribute('draggable', 'true');
-
-		addEvent(element, 'dragstart', function (e) {
-			e.dataTransfer.effectAllowed = 'copy';
-			var data = {
-				id: this.id,
-				color: parseInt(this.id.replace('color_', '')),
-				fromHole: false
-			};
-			e.dataTransfer.setData('Text', JSON.stringify(data));
-		});
-
-		setupMobileDragDrop(element);
+		setupDraggableColor(colorElements[i]);
 	}
 };
+
+function setupDraggableColor(color) {
+	color.setAttribute('draggable', 'true');
+
+	addEvent(color, 'dragstart', function (e) {
+		e.dataTransfer.effectAllowed = 'copy';
+		var data = {
+			id: this.id,
+			color: parseInt(this.id.replace('color_', '')),
+			fromHole: false
+		};
+		e.dataTransfer.setData('Text', JSON.stringify(data));
+	});
+
+	setupMobileDragDrop(color);
+}
 
 function setupAttemptRow() {
 	setDropTargets();
@@ -207,9 +209,8 @@ function setDropZone(element) {
 
 				if (oldColorId !== null) {
 					var oldColorElement = document.getElementById(oldColorId);
-					oldColorElement.setAttribute('draggable', 'true');
 					oldColorElement.style.opacity = '1';
-					setupMobileDragDrop(oldColorElement);
+					setupDraggableColor(oldColorElement);
 				}
 			}
 		} else {

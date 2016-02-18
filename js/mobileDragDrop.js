@@ -85,10 +85,10 @@ function handleTouchDrop(hole) {
 			}
 
 			if (oldColorId !== null) {
+				// Make old color draggable
 				var oldColorElement = document.getElementById(oldColorId);
-				oldColorElement.setAttribute('draggable', 'true');
 				oldColorElement.style.opacity = '1';
-				setupMobileDragDrop(oldColorElement);
+				setupDraggableColor(oldColorElement);
 			}
 		}
 	} else {

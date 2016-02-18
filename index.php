@@ -16,6 +16,7 @@ include('php/getHighscores.php');
 	<link rel="stylesheet" href="build/css/style.css">
 	<link rel="import" href="https://www.polymer-project.org/1.0/components/paper-ripple/paper-ripple.html">
 
+	<!-- Favicon setup -->
 	<?php include('favicons.php'); ?>
 </head>
 <body>

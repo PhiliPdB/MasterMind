@@ -10,6 +10,7 @@ var jsHint = require('gulp-jshint');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var imagemin = require('gulp-imagemin');
+var ftp = require('vinyl-ftp');
 
 var paths = {
 	styles: {
@@ -82,7 +83,9 @@ gulp.task('browser-sync', function() {
 });
 
 // Build all
-gulp.task('build', ['scss', 'build-js', 'minify-images']);
+gulp.task('build', ['scss', 'build-js', 'minify-images'], function() {
+	if (gutil.env.type == 'deploy') deploy();
+});
 
 // scss stuff
 gulp.task('scss', function() {
@@ -92,7 +95,7 @@ gulp.task('scss', function() {
 		.pipe(gulp.dest(paths.styles.dest))
 		.pipe(browserSync.reload({
 			stream: true
-		}));
+		}))
 });
 
 // JS stuff
@@ -106,11 +109,11 @@ gulp.task('build-js', function() {
 	gulp.src(paths.scripts.src)
 		.pipe(concat('script.js'))
 		// Only uglify if gulp is ran with '--type production'
-		.pipe(gutil.env.type === 'production' ? uglify() : gutil.noop())
+		.pipe(gutil.env.type === 'production' || gutil.env.type === 'deploy' ? uglify() : gutil.noop())
 		.pipe(gulp.dest(paths.scripts.dest))
 		.pipe(browserSync.reload({
 			stream: true
-		}));
+		}))
 });
 
 // Images
@@ -121,3 +124,29 @@ gulp.task('minify-images', function () {
 		}))
 		.pipe(gulp.dest(paths.images.dest));
 });
+
+gulp.task('deploy', deploy);
+
+function deploy() {
+	var config = require('./config.json');
+	var connection = ftp.create({
+		host: config.host,
+		user: config.user,
+		password: config.password,
+		log: gutil.log
+	});
+
+	var globs = [
+		"build/**",
+		"index.php",
+		"favicons.php",
+		"php/**",
+		"favicons/**"
+	];
+
+	// using base = '.' will transfer everything to folder correctly 
+	// turn off buffering in gulp.src for best performance 
+	return gulp.src(globs, { base: '.', buffer: false })
+		.pipe(connection.newer(config.remote_path)) // only upload newer files 
+		.pipe(connection.dest(config.remote_path));
+}

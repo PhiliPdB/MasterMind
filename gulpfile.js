@@ -137,11 +137,12 @@ function deploy() {
 	});
 
 	var globs = [
-		"build/**",
-		"index.php",
-		"favicons.php",
-		"php/**",
-		"favicons/generated/**"
+		'build/**',
+		'index.php',
+		'favicons.php',
+		'php/**',
+		'!php/connection.php',
+		'favicons/generated/**'
 	];
 
 	// using base = '.' will transfer everything to folder correctly 

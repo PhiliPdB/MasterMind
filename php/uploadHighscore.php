@@ -18,8 +18,8 @@ if (strlen($username) > 0 && strlen($username) <= 20 && $score > 0 && intval($_C
 	setcookie("score", $score, time() + 3600 * 7 * 52, "/");
 	setcookie("nickname", $username, time() + 3600 * 7 * 52, "/");
 	$_COOKIE['score'] = $score;
-	$_COOKIE['nickname'] = $username;
-	echo "success";
+	echo "uploaded";
 }
+$_COOKIE['nickname'] = $username;
 
  ?>

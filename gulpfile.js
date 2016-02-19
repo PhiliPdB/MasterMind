@@ -141,7 +141,7 @@ function deploy() {
 		"index.php",
 		"favicons.php",
 		"php/**",
-		"favicons/**"
+		"favicons/generated/**"
 	];
 
 	// using base = '.' will transfer everything to folder correctly 

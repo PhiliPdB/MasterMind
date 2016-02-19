@@ -2,7 +2,7 @@
 session_start();
 
 $colors = [];
-if ($_SESSION['colors'] == null) {
+if (!array_key_exists('colors', $_SESSION) || !isset($_SESSION['colors'])) {
 	while (sizeof($colors) < 4) {
 		$randomNumber = intval(round(rand(0, 7)));
 		$found = false;

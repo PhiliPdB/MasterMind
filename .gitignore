@@ -35,5 +35,6 @@ phpmyadmin/
 
 # sftp configuration file
 sftp-config.json
-# Config file
+# Config files
 config.json
+php/connection.php

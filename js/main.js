@@ -120,7 +120,7 @@ function uploadHighScore() {
 	var username = document.getElementById('nickname').value;
 	var request = new XMLHttpRequest();
 	var params = 'username=' + username;
-	request.open('POST', 'php/uploadHighScore.php', true);
+	request.open('POST', 'php/uploadHighscore.php', true);
 
 	//Send the proper header information along with the request
 	request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");

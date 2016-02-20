@@ -1,7 +1,9 @@
 <?php 
+require('mySession.php');
 
-session_start();
+my_session_start();
 
 session_unset();
+session_destroy();
 
  ?>

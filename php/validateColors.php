@@ -1,5 +1,7 @@
 <?php 
-session_start();
+require('mySession.php');
+
+my_session_start();
 
 $colors = [];
 if (!array_key_exists('colors', $_SESSION) || !isset($_SESSION['colors'])) {

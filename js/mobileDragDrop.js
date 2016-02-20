@@ -1,8 +1,8 @@
-var pointerElement;
-var dragData;
+let pointerElement;
+let dragData;
 
 function setupMobileDragDrop(color) {
-	addEvent(color, 'touchstart', function (event) {
+	addEvent(color, 'touchstart', event => {
 		if (!document.body.contains(pointerElement)) {
 			pointerElement = color.cloneNode(false);
 			pointerElement.style.position = 'absolute';
@@ -14,9 +14,9 @@ function setupMobileDragDrop(color) {
 			pointerElement.style.zIndex = 1000;
 			document.body.appendChild(pointerElement);
 			if (event.targetTouches.length === 1) {
-				var touch = event.targetTouches[0];
-				pointerElement.style.left = touch.pageX - 20 + 'px';
-				pointerElement.style.top = touch.pageY - 20 + 'px';
+				const touch = event.targetTouches[0];
+				pointerElement.style.left = `${touch.pageX - 20}px`;
+				pointerElement.style.top = `${touch.pageY - 20}px`;
 			}
 			// Set drag data
 			dragData = {
@@ -27,43 +27,42 @@ function setupMobileDragDrop(color) {
 		}
 	});
 
-	addEvent(color, 'touchmove', function (event) {
+	addEvent(color, 'touchmove', event => {
 		if (event.targetTouches.length === 1) {
 			event.preventDefault();
-			var touch = event.targetTouches[0];
-			pointerElement.style.left = touch.pageX - 20 + 'px';
-			pointerElement.style.top = touch.pageY - 20 + 'px';
+			const touch = event.targetTouches[0];
+			pointerElement.style.left = `${touch.pageX - 20}px`;
+			pointerElement.style.top = `${touch.pageY - 20}px`;
 		}
 	});
 
-	addEvent(color, 'touchend', function (event) {
-		var location = getPosition(pointerElement);
+	addEvent(color, 'touchend', event => {
+		const location = getPosition(pointerElement);
 		location.x += 20;
 		location.y += 20;
 		document.body.removeChild(pointerElement);
 		// Check if is hovering hole
-		var holes = attemptRows[attempt].getElementsByClassName('hole');
+		const holes = attemptRows[attempt].getElementsByClassName('hole');
 
-		var length = holes.length;
-		for (var i = 0; i < length; i++) {
+		const length = holes.length;
+		for (let i = 0; i < length; i++) {
 			if (holes[i].className.indexOf('little') > -1) continue;
-			position = getPosition(holes[i]);
+			let position = getPosition(holes[i]);
 			if (location.x >= position.x && location.x <= position.x + 40 && location.y >= position.y && location.y <= position.y + 40) {
-				// TODO handle drop
 				handleTouchDrop(holes[i]);
 				break;
 			}
 		}
 	});
 
-	addEvent(color, 'touchcancel', function (event) {
+	addEvent(color, 'touchcancel', event => {
 		document.body.removeChild(pointerElement);
 	});
 }
 
 function handleTouchDrop(hole) {
-	var el;
-	var id = dragData.id;
+	let el;
+	let id = dragData.id;
 	if (!dragData.fromHole) {
 		// Make the color not draggable anymore
 		el = document.getElementById(id);
@@ -73,11 +72,11 @@ function handleTouchDrop(hole) {
 
 		// Check if hole was filled before
 		if (hole.className.indexOf('color') > -1) {
-			classNameArray = hole.className.split(' ');
+			const classNameArray = hole.className.split(' ');
 
-			oldColorId = null;
-			classNameArrayLength = classNameArray.length;
-			for (i = 0; i < classNameArrayLength; i++) {
+			let oldColorId = null;
+			const classNameArrayLength = classNameArray.length;
+			for (let i = 0; i < classNameArrayLength; i++) {
 				if (classNameArray[i].indexOf('color') > -1) {
 					oldColorId = classNameArray[i];
 					break;
@@ -86,21 +85,21 @@ function handleTouchDrop(hole) {
 
 			if (oldColorId !== null) {
 				// Make old color draggable
-				var oldColorElement = document.getElementById(oldColorId);
+				const oldColorElement = document.getElementById(oldColorId);
 				oldColorElement.style.opacity = '1';
 				setupDraggableColor(oldColorElement);
 			}
 		}
 	} else {
-		var otherHole = attemptRows[attempt].getElementsByClassName(dragData.class)[0];
-		var otherHoleClone;
+		const otherHole = attemptRows[attempt].getElementsByClassName(dragData.class)[0];
+		let otherHoleClone;
 		// Check if hole was filled before
 		if (hole.className.indexOf('color') > -1) {
-			classNameArray = hole.className.split(' ');
+			const classNameArray = hole.className.split(' ');
 
-			oldColorId = null;
-			classNameArrayLength = classNameArray.length;
-			for (i = 0; i < classNameArrayLength; i++) {
+			let oldColorId = null;
+			const classNameArrayLength = classNameArray.length;
+			for (let i = 0; i < classNameArrayLength; i++) {
 				if (classNameArray[i].indexOf('color') > -1) {
 					oldColorId = classNameArray[i];
 					break;
@@ -108,21 +107,21 @@ function handleTouchDrop(hole) {
 			}
 
 			if (oldColorId !== null) {
-				hole.className.replace(' ' + oldColorId, '');
+				hole.className.replace(` ${oldColorId}`, '');
 				otherHole.className = otherHole.className.replace(
-					' color_' + dragData.color, ' ' + oldColorId
+					` color_${dragData.color}`, ` ${oldColorId}`
 				);
 				// Swap colors
-				var index1 = parseInt(hole.id.replace('hole_', ''));
-				var index2 = parseInt(otherHole.id.replace('hole_', ''));
+				const index1 = parseInt(hole.id.replace('hole_', ''));
+				let index2 = parseInt(otherHole.id.replace('hole_', ''));
 				currentInput[index2] = currentInput[index1];
 
 				otherHoleClone = otherHole.cloneNode(true);
 				// Set event listeners
 				setDropZone(otherHoleClone);
-				addEvent(otherHoleClone, 'dragstart', function (e) {
+				addEvent(otherHoleClone, 'dragstart', e => {
 					e.dataTransfer.effectAllowed = 'copy';
-					var data = {
+					const data = {
 						id: otherHoleClone.id,
 						class: otherHoleClone.className,
 						color: parseInt(oldColorId.replace('color_', '')),
@@ -146,26 +145,26 @@ function handleTouchDrop(hole) {
 			otherHole.parentNode.replaceChild(otherHoleClone, otherHole);
 		}
 
-		id = 'color_' + dragData.color;
+		id = `color_${dragData.color}`;
 		el = document.getElementById(id);
 	}
 
 	// Handle the drop
-	hole.className = 'hole filled ' + id;
+	hole.className = `hole filled ${id}`;
 
 	// Save color
-	var index = parseInt(hole.id.replace('hole_', ''));
+	let index = parseInt(hole.id.replace('hole_', ''));
 	currentInput[index] = dragData.color;
 
 	// Make hole draggable
 	// Remove 'old' event listeners
-	var holeClone = hole.cloneNode(true);
+	const holeClone = hole.cloneNode(true);
 	// Add 'new' event listeners
 	holeClone.setAttribute('draggable', 'true');
 	setDropZone(holeClone);
-	addEvent(holeClone, 'dragstart', function (e) {
+	addEvent(holeClone, 'dragstart', e => {
 		e.dataTransfer.effectAllowed = 'copy';
-		var data = {
+		const data = {
 			id: holeClone.id,
 			class: holeClone.className,
 			color: parseInt(el.id.replace('color_', '')),
@@ -180,7 +179,7 @@ function handleTouchDrop(hole) {
 }
 
 function setupTouchDragHole(hole, color) {
-	addEvent(hole, 'touchstart', function (event) {
+	addEvent(hole, 'touchstart', event => {
 		if (!document.body.contains(pointerElement)) {
 			pointerElement = color.cloneNode(false);
 			pointerElement.style.position = 'absolute';
@@ -192,9 +191,9 @@ function setupTouchDragHole(hole, color) {
 			pointerElement.style.zIndex = 1000;
 			document.body.appendChild(pointerElement);
 			if (event.targetTouches.length === 1) {
-				var touch = event.targetTouches[0];
-				pointerElement.style.left = touch.pageX - 20 + 'px';
-				pointerElement.style.top = touch.pageY - 20 + 'px';
+				const touch = event.targetTouches[0];
+				pointerElement.style.left = `${touch.pageX - 20}px`;
+				pointerElement.style.top = `${touch.pageY - 20}px`;
 			}
 			// Set drag data
 			dragData = {
@@ -206,36 +205,35 @@ function setupTouchDragHole(hole, color) {
 		}
 	});
 
-	addEvent(hole, 'touchmove', function (event) {
+	addEvent(hole, 'touchmove', event => {
 		if (event.targetTouches.length === 1) {
 			event.preventDefault();
-			var touch = event.targetTouches[0];
-			pointerElement.style.left = touch.pageX - 20 + 'px';
-			pointerElement.style.top = touch.pageY - 20 + 'px';
+			const touch = event.targetTouches[0];
+			pointerElement.style.left = `${touch.pageX - 20}px`;
+			pointerElement.style.top = `${touch.pageY - 20}px`;
 		}
 	});
 
-	addEvent(hole, 'touchend', function (event) {
-		var location = getPosition(pointerElement);
+	addEvent(hole, 'touchend', event => {
+		const location = getPosition(pointerElement);
 		location.x += 20;
 		location.y += 20;
 		document.body.removeChild(pointerElement);
 		// Check if is hovering hole
-		var holes = attemptRows[attempt].getElementsByClassName('hole');
+		const holes = attemptRows[attempt].getElementsByClassName('hole');
 
-		var length = holes.length;
-		for (var i = 0; i < length; i++) {
+		const length = holes.length;
+		for (let i = 0; i < length; i++) {
 			if (holes[i].className.indexOf('little') > -1) continue;
-			position = getPosition(holes[i]);
+			const position = getPosition(holes[i]);
 			if (location.x >= position.x && location.x <= position.x + 40 && location.y >= position.y && location.y <= position.y + 40) {
-				// TODO handle drop
 				handleTouchDrop(holes[i]);
 				break;
 			}
 		}
 	});
 
-	addEvent(hole, 'touchcancel', function (event) {
+	addEvent(hole, 'touchcancel', event => {
 		document.body.removeChild(pointerElement);
 	});
 }

@@ -1,14 +1,14 @@
-var colorElements = document.getElementsByClassName('color');
-var attemptRows = [].slice.call(document.getElementsByClassName('row')).reverse();
-var currentInput = [null, null, null, null];
-var attempt = 0;
+const colorElements = document.getElementsByClassName('color');
+const attemptRows = [].slice.call(document.getElementsByClassName('row')).reverse();
+let currentInput = [null, null, null, null];
+let attempt = 0;
 
 window.onload = function() {
 	setupAttemptRow();
 
 	// Make the colors draggable
-	var colorElementsSize = colorElements.length;
-	for (var i = 0; i < colorElementsSize; i++) {
+	const colorElementsSize = colorElements.length;
+	for (let i = 0; i < colorElementsSize; i++) {
 		setupDraggableColor(colorElements[i]);
 	}
 };
@@ -16,11 +16,11 @@ window.onload = function() {
 function setupDraggableColor(color) {
 	color.setAttribute('draggable', 'true');
 
-	addEvent(color, 'dragstart', function (e) {
+	addEvent(color, 'dragstart', e => {
 		e.dataTransfer.effectAllowed = 'copy';
-		var data = {
-			id: this.id,
-			color: parseInt(this.id.replace('color_', '')),
+		const data = {
+			id: color.id,
+			color: parseInt(color.id.replace('color_', '')),
 			fromHole: false
 		};
 		e.dataTransfer.setData('Text', JSON.stringify(data));
@@ -32,16 +32,16 @@ function setupDraggableColor(color) {
 function setupAttemptRow() {
 	setDropTargets();
 	// Display check button
-	var checkButton = attemptRows[attempt].getElementsByClassName('check')[0];
+	const checkButton = attemptRows[attempt].getElementsByClassName('check')[0];
 	checkButton.style.opacity = '1';
 	checkButton.style.pointerEvents = 'auto';
 }
 
 function setDropTargets() {
-	var holes = attemptRows[attempt].getElementsByClassName('hole');
+	const holes = attemptRows[attempt].getElementsByClassName('hole');
 
-	var length = holes.length;
-	for (var i = 0; i < length; i++) {
+	const length = holes.length;
+	for (let i = 0; i < length; i++) {
 		if (holes[i].className.indexOf('little') > -1) continue;
 		setDropZone(holes[i]);
 	}
@@ -53,8 +53,8 @@ function checkColors() {
 		return;
 	}
 
-	var request = new XMLHttpRequest();
-	var params = 'colors=' + currentInput;
+	const request = new XMLHttpRequest();
+	const params = `colors=${currentInput}`;
 
 	request.open('POST', 'php/validateColors.php', true);
 
@@ -73,11 +73,11 @@ function checkColors() {
 }
 
 function handleColorValidation(validation) {
-	var won = validation.black == 4;
-	var little_holes = attemptRows[attempt].getElementsByClassName('little hole');
+	const won = validation.black == 4;
+	const little_holes = attemptRows[attempt].getElementsByClassName('little hole');
 	// Fill the little holes
-	var length = little_holes.length;
-	for (var i = 0; i < length; i++) {
+	const length = little_holes.length;
+	for (let i = 0; i < length; i++) {
 		if (validation.black > 0) {
 			little_holes[i].className += " filled black";
 			validation.black--;
@@ -92,24 +92,23 @@ function handleColorValidation(validation) {
 	if (!won && attempt + 1 < 12) {
 		nextAttempt();
 	} else if (won) {
-		// TODO show solution
 		document.getElementById('win').style.display = 'block';
 		document.getElementById('dimmer').style.display = 'block';
 
-		var request = new XMLHttpRequest();
+		const request = new XMLHttpRequest();
 		request.open('POST', 'php/getScore.php', true);
 
 		request.onreadystatechange = function() {
 			if (request.readyState === XMLHttpRequest.DONE) {
 				if (request.status === 200) {
 					// Handle output
-					var response = JSON.parse(request.responseText);
+					const response = JSON.parse(request.responseText);
 					document.getElementById('score').innerHTML = response.score;
 				}
 			}
 		};
 		request.send();
-	} else if (attempt + 1 == 12) {
+	} else if (attempt + 1 === 12) {
 		// show lose
 		document.getElementById('lose').style.display = 'block';
 		document.getElementById('dimmer').style.display = 'block';
@@ -117,9 +116,9 @@ function handleColorValidation(validation) {
 }
 
 function uploadHighScore() {
-	var username = document.getElementById('nickname').value;
-	var request = new XMLHttpRequest();
-	var params = 'username=' + username;
+	const username = document.getElementById('nickname').value;
+	const request = new XMLHttpRequest();
+	const params = `username=${username}`;
 	request.open('POST', 'php/uploadHighscore.php', true);
 
 	//Send the proper header information along with the request
@@ -132,9 +131,9 @@ function nextAttempt() {
 	// reset used colors
 	currentInput = [null, null, null, null];
 	// Make the colors draggable
-	var colorElementsSize = colorElements.length;
-	for (var i = 0; i < colorElementsSize; i++) {
-		var element = colorElements[i];
+	const colorElementsSize = colorElements.length;
+	for (let i = 0; i < colorElementsSize; i++) {
+		const element = colorElements[i];
 
 		if (element.getAttribute('draggable') == "true") {
 			continue;
@@ -143,11 +142,11 @@ function nextAttempt() {
 		element.setAttribute('draggable', 'true');
 		element.style.opacity = '1';
 
-		addEvent(element, 'dragstart', function (e) {
+		addEvent(element, 'dragstart', e => {
 			e.dataTransfer.effectAllowed = 'copy';
-			var data = {
-				id: this.id,
-				color: parseInt(this.id.replace('color_', '')),
+			const data = {
+				id: element.id,
+				color: parseInt(element.id.replace('color_', '')),
 				fromHole: false
 			};
 			e.dataTransfer.setData('Text', JSON.stringify(data));
@@ -155,16 +154,16 @@ function nextAttempt() {
 		setupMobileDragDrop(element);
 	}
 	// Remove event listeners
-	var holes = attemptRows[attempt].getElementsByClassName('hole');
-	var length = holes.length;
-	for (var j = 0; j < length; j++) {
-		var old_element = holes[j];
-		var new_element = old_element.cloneNode(true);
+	const holes = attemptRows[attempt].getElementsByClassName('hole');
+	const length = holes.length;
+	for (let j = 0; j < length; j++) {
+		const old_element = holes[j];
+		const new_element = old_element.cloneNode(true);
 		new_element.setAttribute('draggable', 'false');
 		old_element.parentNode.replaceChild(new_element, old_element);
 	}
 	// Hide check button
-	var checkButton = attemptRows[attempt].getElementsByClassName('check')[0];
+	const checkButton = attemptRows[attempt].getElementsByClassName('check')[0];
 	checkButton.style.opacity = '0';
 	checkButton.style.pointerEvents = 'none';
 
@@ -174,19 +173,19 @@ function nextAttempt() {
 }
 
 function setDropZone(element) {
-	addEvent(element, 'dragover', function (e) {
+	addEvent(element, 'dragover', e => {
 		if (e.preventDefault()) e.preventDefault();
 		e.dataTransfer.dropEffect = 'copy';
 		return false;
 	});
 
-	addEvent(element, 'drop', function (e) {
+	addEvent(element, 'drop', e => {
 		if (e.preventDefault) e.preventDefault();
 		if (e.stopPropagation) e.stopPropagation(); // stops the browser from redirecting...why???
 		
-		var data = JSON.parse(e.dataTransfer.getData('Text'));
-		var el, classNameArray, classNameArrayLength, oldColorId, i;
-		var id = data.id;
+		const data = JSON.parse(e.dataTransfer.getData('Text'));
+		let el, classNameArray, classNameArrayLength, oldColorId, i;
+		let id = data.id;
 		if (!data.fromHole) {
 			// Make the color not draggable anymore
 			el = document.getElementById(id);
@@ -195,12 +194,12 @@ function setDropZone(element) {
 			removeEventListeners(el);
 
 			// Check if hole was filled before
-			if (this.className.indexOf('color') > -1) {
-				classNameArray = this.className.split(' ');
+			if (element.className.indexOf('color') > -1) {
+				const classNameArray = element.className.split(' ');
 
-				oldColorId = null;
-				classNameArrayLength = classNameArray.length;
-				for (i = 0; i < classNameArrayLength; i++) {
+				let oldColorId = null;
+				const classNameArrayLength = classNameArray.length;
+				for (let i = 0; i < classNameArrayLength; i++) {
 					if (classNameArray[i].indexOf('color') > -1) {
 						oldColorId = classNameArray[i];
 						break;
@@ -208,21 +207,21 @@ function setDropZone(element) {
 				}
 
 				if (oldColorId !== null) {
-					var oldColorElement = document.getElementById(oldColorId);
+					const oldColorElement = document.getElementById(oldColorId);
 					oldColorElement.style.opacity = '1';
 					setupDraggableColor(oldColorElement);
 				}
 			}
 		} else {
-			var otherHole = attemptRows[attempt].getElementsByClassName(data.class)[0];
-			var otherHoleClone;
+			const otherHole = attemptRows[attempt].getElementsByClassName(data.class)[0];
+			let otherHoleClone;
 			// Check if hole was filled before
-			if (this.className.indexOf('color') > -1) {
-				classNameArray = this.className.split(' ');
+			if (element.className.indexOf('color') > -1) {
+				const classNameArray = element.className.split(' ');
 
-				oldColorId = null;
-				classNameArrayLength = classNameArray.length;
-				for (i = 0; i < classNameArrayLength; i++) {
+				let oldColorId = null;
+				const classNameArrayLength = classNameArray.length;
+				for (let i = 0; i < classNameArrayLength; i++) {
 					if (classNameArray[i].indexOf('color') > -1) {
 						oldColorId = classNameArray[i];
 						break;
@@ -230,21 +229,21 @@ function setDropZone(element) {
 				}
 
 				if (oldColorId !== null) {
-					this.className.replace(' ' + oldColorId, '');
+					element.className.replace(` ${oldColorId}`, '');
 					otherHole.className = otherHole.className.replace(
-						' color_' + data.color, ' ' + oldColorId
+						` color_${data.color}`, ` ${oldColorId}`
 					);
 					// Swap colors
-					var index1 = parseInt(this.id.replace('hole_', ''));
-					var index2 = parseInt(otherHole.id.replace('hole_', ''));
+					const index1 = parseInt(element.id.replace('hole_', ''));
+					let index2 = parseInt(otherHole.id.replace('hole_', ''));
 					currentInput[index2] = currentInput[index1];
 
 					otherHoleClone = otherHole.cloneNode(true);
 					// Set event listeners
 					setDropZone(otherHoleClone);
-					addEvent(otherHoleClone, 'dragstart', function (e) {
+					addEvent(otherHoleClone, 'dragstart', e => {
 						e.dataTransfer.effectAllowed = 'copy';
-						var data = {
+						const data = {
 							id: otherHoleClone.id,
 							class: otherHoleClone.className,
 							color: parseInt(oldColorId.replace('color_', '')),
@@ -268,26 +267,26 @@ function setDropZone(element) {
 				otherHole.parentNode.replaceChild(otherHoleClone, otherHole);
 			}
 
-			id = 'color_' + data.color;
+			id = `color_${data.color}`;
 			el = document.getElementById(id);
 		}
 
 		// Handle the drop
-		this.className = 'hole filled ' + id;
+		element.className = `hole filled ${id}`;
 
 		// Save color
-		var index = parseInt(this.id.replace('hole_', ''));
+		let index = parseInt(element.id.replace('hole_', ''));
 		currentInput[index] = data.color;
 
 		// Make hole draggable
 		// Remove 'old' event listeners
-		var holeClone = this.cloneNode(true);
+		const holeClone = element.cloneNode(true);
 		// Add 'new' event listeners
 		holeClone.setAttribute('draggable', 'true');
 		setDropZone(holeClone);
-		addEvent(holeClone, 'dragstart', function (e) {
+		addEvent(holeClone, 'dragstart', e => {
 			e.dataTransfer.effectAllowed = 'copy';
-			var data = {
+			const data = {
 				id: holeClone.id,
 				class: holeClone.className,
 				color: parseInt(el.id.replace('color_', '')),
@@ -298,7 +297,7 @@ function setDropZone(element) {
 		// Make draggable on mobile devices
 		setupTouchDragHole(holeClone, el);
 		// Replace
-		this.parentNode.replaceChild(holeClone, this);
+		element.parentNode.replaceChild(holeClone, element);
 	});
 }
 
@@ -308,9 +307,9 @@ function resetBoard() {
 	// Reset used colors
 	currentInput = [null, null, null, null];
 	// Make the colors draggable
-	var colorElementsSize = colorElements.length;
-	for (var i = 0; i < colorElementsSize; i++) {
-		var element = colorElements[i];
+	const colorElementsSize = colorElements.length;
+	for (let i = 0; i < colorElementsSize; i++) {
+		let element = colorElements[i];
 
 		if (element.getAttribute('draggable') == "true") {
 			continue;
@@ -319,11 +318,11 @@ function resetBoard() {
 		element.setAttribute('draggable', 'true');
 		element.style.opacity = '1';
 
-		addEvent(element, 'dragstart', function (e) {
+		addEvent(element, 'dragstart', e => {
 			e.dataTransfer.effectAllowed = 'copy';
-			var data = {
-				id: this.id,
-				color: parseInt(this.id.replace('color_', '')),
+			const data = {
+				id: element.id,
+				color: parseInt(element.id.replace('color_', '')),
 				fromHole: false
 			};
 			e.dataTransfer.setData('Text', JSON.stringify(data));
@@ -331,13 +330,13 @@ function resetBoard() {
 		setupMobileDragDrop(element);
 	}
 	// Remove event listeners and reset colors
-	var attemptRowLength = attemptRows.length - 1;
-	for (var j = 0; j < attemptRowLength; j++) {
-		var holes = attemptRows[j].getElementsByClassName('hole');
-		var length = holes.length;
-		for (var k = 0; k < length; k++) {
-			var old_element = holes[k];
-			var new_element = old_element.cloneNode(true);
+	const attemptRowLength = attemptRows.length - 1;
+	for (let j = 0; j < attemptRowLength; j++) {
+		const holes = attemptRows[j].getElementsByClassName('hole');
+		const length = holes.length;
+		for (let k = 0; k < length; k++) {
+			const old_element = holes[k];
+			const new_element = old_element.cloneNode(true);
 			new_element.setAttribute('draggable', 'false');
 			if (new_element.className.indexOf('little') > -1) {
 				new_element.className = 'hole little';
@@ -347,7 +346,7 @@ function resetBoard() {
 			old_element.parentNode.replaceChild(new_element, old_element);
 		}
 		// Hide check button
-		var checkButton = attemptRows[j].getElementsByClassName('check')[0];
+		const checkButton = attemptRows[j].getElementsByClassName('check')[0];
 		if (j === 0) {
 			checkButton.style.pointerEvents = 'auto';
 			checkButton.style.opacity = '1';
@@ -363,7 +362,7 @@ function resetBoard() {
 }
 
 function resetColors() {
-	var request = new XMLHttpRequest();
+	const request = new XMLHttpRequest();
 	request.open('POST', 'php/resetColors.php', true);
 	request.send();
 }
@@ -379,43 +378,43 @@ function hideWin() {
 }
 
 function removeEventListeners(element) {
-	var newElement = element.cloneNode(true);
+	const newElement = element.cloneNode(true);
 	element.parentNode.replaceChild(newElement, element);
 }
 
 function getPosition(element) {
-	var xPosition = 0;
-	var yPosition = 0;
+	let xPosition = 0;
+	let yPosition = 0;
 	
 	while(element) {
-		xPosition += (element.offsetLeft - element.scrollLeft + element.clientLeft);
-		yPosition += (element.offsetTop - element.scrollTop + element.clientTop);
+		xPosition += element.offsetLeft - element.scrollLeft + element.clientLeft;
+		yPosition += element.offsetTop - element.scrollTop + element.clientTop;
 		element = element.offsetParent;
 	}
 	return { x: xPosition, y: yPosition };
 }
 
 // This is a function from https://github.com/remy/html5demos
-var addEvent = (function () {
+const addEvent = ((() => {
 	if (document.addEventListener) {
-		return function (el, type, fn) {
+		return (el, type, fn) => {
 			if (el && el.nodeName || el === window) {
 				el.addEventListener(type, fn, false);
 			} else if (el && el.length) {
-				for (var i = 0; i < el.length; i++) {
+				for (let i = 0; i < el.length; i++) {
 					addEvent(el[i], type, fn);
 				}
 			}
 		};
 	} else {
-		return function (el, type, fn) {
+		return (el, type, fn) => {
 			if (el && el.nodeName || el === window) {
-				el.attachEvent('on' + type, function () { return fn.call(el, window.event); });
+				el.attachEvent(`on${type}`, () => { return fn.call(el, window.event); });
 			} else if (el && el.length) {
-				for (var i = 0; i < el.length; i++) {
+				for (let i = 0; i < el.length; i++) {
 					addEvent(el[i], type, fn);
 				}
 			}
 		};
 	}
-})();
+}))();

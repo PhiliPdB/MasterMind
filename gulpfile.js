@@ -1,12 +1,13 @@
 'use strict';
 
 var gulp = require('gulp');
-var gutil = require('gulp-util')
+var gutil = require('gulp-util');
+var babel = require('gulp-babel');
 var phpConnect = require('gulp-connect-php');
 var browserSync = require('browser-sync');
 var sass = require('gulp-sass');
 var autoprefixer = require('gulp-autoprefixer');
-var jsHint = require('gulp-jshint');
+var eslint = require('gulp-eslint');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var imagemin = require('gulp-imagemin');
@@ -40,7 +41,7 @@ gulp.task('serve', ['connect', 'browser-sync']);
 
 gulp.task('watch', function() {
 	gulp.watch(paths.styles.src, ['scss']);
-	gulp.watch(paths.scripts.src, ['jshint', 'build-js']);
+	gulp.watch(paths.scripts.src, ['eslint', 'build-js']);
 	gulp.watch(paths.images.src, ['minify-images']);
 });
 
@@ -99,14 +100,15 @@ gulp.task('scss', function() {
 });
 
 // JS stuff
-gulp.task('jshint', function() {
+gulp.task('eslint', function() {
 	gulp.src(paths.scripts.src)
-		.pipe(jsHint())
-		.pipe(jsHint.reporter('jshint-stylish'));
+		.pipe(eslint('.eslintrc'))
+		.pipe(eslint.format());
 });
 
 gulp.task('build-js', function() {
 	gulp.src(paths.scripts.src)
+		.pipe(babel())
 		.pipe(concat('script.js'))
 		// Only uglify if gulp is ran with '--type production'
 		.pipe(gutil.env.type === 'production' || gutil.env.type === 'deploy' ? uglify() : gutil.noop())

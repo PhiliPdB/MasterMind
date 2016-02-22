@@ -52,7 +52,16 @@ function checkColors() {
 		// Not all holes are filled
 		return;
 	}
+	// Display spinner
+	const spinner = attemptRows[attempt].getElementsByClassName('spinner')[0];
+	const check = attemptRows[attempt].getElementsByClassName('check')[0];
+	check.style.opacity = '0';
+	check.style.pointerEvents = 'none';
+	check.style.display = 'none';
+	spinner.style.display = 'block';
+	spinner.style.opacity = '1';
 
+	// Send request
 	const request = new XMLHttpRequest();
 	const params = `colors=${currentInput}`;
 
@@ -63,6 +72,13 @@ function checkColors() {
 
 	request.onreadystatechange = function() {
 		if (request.readyState === XMLHttpRequest.DONE) {
+			// Hide spinner
+			spinner.style.opacity = '0';
+			spinner.style.display = 'none';
+			check.style.display = 'block';
+			check.style.opacity = '1';
+			check.style.pointerEvents = 'auto';
+
 			if (request.status === 200) {
 				// Handle output
 				handleColorValidation(JSON.parse(request.responseText));

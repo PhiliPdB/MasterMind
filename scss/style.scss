@@ -1,6 +1,7 @@
 @import 'variables';
 @import 'buttons';
 @import 'inputs';
+@import 'spinner';
 
 body, html, * {
 	margin: 0;
@@ -80,16 +81,30 @@ body {
 				align-content: center;
 			}
 
-			.check {
+			.svg_box {
 				width: $color_radius * 2;
 				height: $color_radius * 2;
 				padding: $padding_unit / 2;
-				fill: $darker_white;
-				cursor: pointer;
-				opacity: 0;
-				display: block;
-				pointer-events: none;
+
+				.check {
+					width: 100%;
+					height: 100%;
+					fill: $darker_white;
+					cursor: pointer;
+					opacity: 0;
+					display: block;
+					pointer-events: none;
+				}
+
+				.spinner {
+					width: 100%;
+					height: 100%;
+					opacity: 0;
+					display: none;
+					stroke: $darker_white;
+				}
 			}
+			
 
 			.hole {
 				width: $color_radius * 2;

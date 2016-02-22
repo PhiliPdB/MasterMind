@@ -40,9 +40,14 @@ include('php/getHighscores.php');
 				}
 				echo "</div>";
 				// The check svg
+				echo "<div class=\"svg_box\">";
 				echo "<svg class=\"check\" onclick=\"checkColors()\" height=\"40\" viewBox=\"0 0 24 24\" width=\"40\" xmlns=\"http://www.w3.org/2000/svg\">";
 				echo "<path d=\"M0 0h24v24H0z\" fill=\"none\"/><path d=\"M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z\"/>";
 				echo "</svg>";
+				echo "<svg class=\"spinner\" width=\"40px\" height=\"40px\" viewBox=\"0 0 66 66\" xmlns=\"http://www.w3.org/2000/svg\">";
+				echo "<circle class=\"path\" fill=\"none\" stroke-width=\"6\" stroke-linecap=\"round\" cx=\"33\" cy=\"33\" r=\"30\"></circle>";
+				echo "</svg>";
+				echo "</div>";
 
 				echo "</div>";
 			}

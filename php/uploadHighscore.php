@@ -1,9 +1,7 @@
 <?php
 require("connection.php");
 require("calculateScore.php");
-require('mySession.php');
-
-my_session_start();
+require("startSession.php");
 
 $username = $connection->real_escape_string($_POST['username']);
 $score = calculate_score($_SESSION['attempts'], $_SESSION['black'], $_SESSION['white']);

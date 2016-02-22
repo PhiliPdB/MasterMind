@@ -13,6 +13,8 @@ window.onload = function() {
 	}
 };
 
+window.setInterval(refreshPHPSession, 3600 * 1000);
+
 function setupDraggableColor(color) {
 	color.setAttribute('draggable', 'true');
 
@@ -408,6 +410,12 @@ function getPosition(element) {
 		element = element.offsetParent;
 	}
 	return { x: xPosition, y: yPosition };
+}
+
+function refreshPHPSession() {
+	const request = new XMLHttpRequest();
+	request.open('GET', 'php/startSession.php', true);
+	request.send();
 }
 
 // This is a function from https://github.com/remy/html5demos

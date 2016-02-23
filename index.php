@@ -22,8 +22,6 @@ include('php/getHighscores.php');
 <body>
 	<div id="board">
 		<div id="rows">
-			<!-- Row with the solution -->
-			<div id="solution" class="row"></div>
 			<!-- Rows where you can guess the code -->
 			<?php 
 			$attempt_rows = 12;

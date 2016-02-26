@@ -85,7 +85,7 @@ gulp.task('browser-sync', function() {
 
 // Build all
 gulp.task('build', ['scss', 'build-js', 'minify-images'], function() {
-	if (gutil.env.type == 'deploy') deploy();
+	if (gutil.env.type === 'deploy') deploy();
 });
 
 // scss stuff

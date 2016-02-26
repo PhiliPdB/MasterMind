@@ -15,6 +15,9 @@ window.onload = function() {
 
 window.setInterval(refreshPHPSession, 3600 * 1000);
 
+// scrolls automatically to the bottom when page is taller than screen
+window.scrollTo(0, document.body.clientHeight);
+
 function setupDraggableColor(color) {
 	color.setAttribute('draggable', 'true');
 

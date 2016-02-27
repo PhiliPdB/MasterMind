@@ -1,17 +1,20 @@
 'use strict';
 
-var gulp = require('gulp');
-var gutil = require('gulp-util');
-var babel = require('gulp-babel');
-var phpConnect = require('gulp-connect-php');
-var browserSync = require('browser-sync');
-var sass = require('gulp-sass');
-var autoprefixer = require('gulp-autoprefixer');
-var eslint = require('gulp-eslint');
-var concat = require('gulp-concat');
-var uglify = require('gulp-uglify');
-var imagemin = require('gulp-imagemin');
-var ftp = require('vinyl-ftp');
+var gulp = require('gulp'),
+	gutil = require('gulp-util'),
+	babel = require('gulp-babel'),
+	phpConnect = require('gulp-connect-php'),
+	browserSync = require('browser-sync'),
+	sass = require('gulp-sass'),
+	autoprefixer = require('gulp-autoprefixer'),
+	eslint = require('gulp-eslint'),
+	concat = require('gulp-concat'),
+	uglify = require('gulp-uglify'),
+	cssnano = require('gulp-cssnano'),
+	imagemin = require('gulp-imagemin'),
+	ftp = require('vinyl-ftp'),
+	cache = require('gulp-cache'),
+	del = require('del');
 
 var paths = {
 	styles: {
@@ -30,6 +33,7 @@ var paths = {
 
 var liveReloadFiles = [
 	'index.php',
+	'favicons.php',
 	'build/css/**/*.css',
 	'build/js/**/*.js',
 	'build/images/**/*.*'
@@ -84,19 +88,21 @@ gulp.task('browser-sync', function() {
 });
 
 // Build all
-gulp.task('build', ['scss', 'build-js', 'minify-images'], function() {
+gulp.task('build', ['build:scss', 'build:js', 'minify-images'], function() {
 	if (gutil.env.type === 'deploy') deploy();
 });
 
 // scss stuff
-gulp.task('scss', function() {
+gulp.task('build:scss', function() {
 	gulp.src(paths.styles.src)
 		.pipe(sass().on('error', sass.logError))
 		.pipe(autoprefixer())
+		// Only uglify if gulp is ran with '--type production' or '--type deploy'
+		.pipe(gutil.env.type === 'production' || gutil.env.type === 'deploy' ? cssnano() : gutil.noop())
 		.pipe(gulp.dest(paths.styles.dest))
 		.pipe(browserSync.reload({
 			stream: true
-		}))
+		}));
 });
 
 // JS stuff
@@ -106,11 +112,11 @@ gulp.task('eslint', function() {
 		.pipe(eslint.format());
 });
 
-gulp.task('build-js', function() {
+gulp.task('build:js', function() {
 	gulp.src(paths.scripts.src)
 		.pipe(babel())
 		.pipe(concat('script.js'))
-		// Only uglify if gulp is ran with '--type production'
+		// Only uglify if gulp is ran with '--type production' or '--type deploy'
 		.pipe(gutil.env.type === 'production' || gutil.env.type === 'deploy' ? uglify() : gutil.noop())
 		.pipe(gulp.dest(paths.scripts.dest))
 		.pipe(browserSync.reload({
@@ -121,9 +127,9 @@ gulp.task('build-js', function() {
 // Images
 gulp.task('minify-images', function () {
 	gulp.src(paths.images.src)
-		.pipe(imagemin({
+		.pipe(cache(imagemin({
 			progressive: true
-		}))
+		})))
 		.pipe(gulp.dest(paths.images.dest));
 });
 
@@ -153,3 +159,15 @@ function deploy() {
 		.pipe(connection.newer(config.remote_path)) // only upload newer files 
 		.pipe(connection.dest(config.remote_path));
 }
+
+// MISC
+gulp.task('rebuild', ['clear', 'build']);
+gulp.task('clear', ['clear:cache', 'clear:build']);
+
+gulp.task('clear:cache', function (done) {
+	return cache.clearAll(done);
+});
+
+gulp.task('clear:build', function(done) {
+	return del('build');
+});

@@ -148,6 +148,7 @@ function deploy() {
 		'build/**',
 		'index.php',
 		'favicons.php',
+		'metatags.html',
 		'php/**',
 		'!php/connection.php',
 		'favicons/generated/**'

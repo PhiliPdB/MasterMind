@@ -2,7 +2,7 @@ from random import choice, shuffle
 from itertools import product
 from copy import deepcopy
 from variables import dict, scores
-
+from sys import exit
 
 # creates a list with all the possibilities
 def generate_s(length):
@@ -96,4 +96,7 @@ while score != scores[0]:
     score = input('The score: ')
     score_process = score_process + ' ' + score
     s = remove_options(guess, score, s)
+    if len(s) == 0:
+        print('You probably gave me a wrong score :(')
+        exit()
     guess = best_case(s, score_process)

@@ -4,6 +4,7 @@ from copy import deepcopy
 from variables import dict, scores
 from sys import exit
 
+
 # creates a list with all the possibilities
 def generate_s(length):
     s = []

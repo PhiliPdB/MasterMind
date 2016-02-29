@@ -7,7 +7,6 @@ School assignment
 3. Make sure MySQL is running
 4. [Download](https://www.phpmyadmin.net/downloads/) phpmyadmin and copy files to `phpmyadmin/`
 5. `npm install`
-6. Go to `node_modules/gulp-connect-php` and `npm install` (should be removed soon, see also https://github.com/micahblu/gulp-connect-php/issues/1)
 7. Go to the root of this repo and run `gulp build` so all needed files are built
 
 ## How to use

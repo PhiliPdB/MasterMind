@@ -7,7 +7,7 @@ School assignment
 3. Make sure MySQL is running
 4. [Download](https://www.phpmyadmin.net/downloads/) phpmyadmin and copy files to `phpmyadmin/`
 5. `npm install`
-7. Go to the root of this repo and run `gulp build` so all needed files are built
+6. Run `gulp build` so all needed files are built
 
 ## How to use
 To use this run and auto compile scss run the following code.

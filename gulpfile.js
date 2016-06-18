@@ -12,7 +12,7 @@ var gulp = require('gulp'),
 	uglify = require('gulp-uglify'),
 	cssnano = require('gulp-cssnano'),
 	imagemin = require('gulp-imagemin'),
-	ftp = require('vinyl-ftp'),
+	sftp = require('gulp-sftp'),
 	cache = require('gulp-cache'),
 	del = require('del');
 
@@ -137,12 +137,6 @@ gulp.task('deploy', deploy);
 
 function deploy() {
 	var config = require('./config.json');
-	var connection = ftp.create({
-		host: config.host,
-		user: config.user,
-		password: config.password,
-		log: gutil.log
-	});
 
 	var globs = [
 		'build/**',
@@ -157,8 +151,12 @@ function deploy() {
 	// using base = '.' will transfer everything to folder correctly 
 	// turn off buffering in gulp.src for best performance 
 	return gulp.src(globs, { base: '.', buffer: false })
-		.pipe(connection.newer(config.remote_path)) // only upload newer files 
-		.pipe(connection.dest(config.remote_path));
+		.pipe(sftp({
+			host: config.host,
+			user: config.user,
+			pass: config.password,
+			remotePath: remotePath
+		}));
 }
 
 // MISC

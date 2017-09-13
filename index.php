@@ -9,9 +9,9 @@ include('php/getHighscores.php');
 <head>
 	<!-- Meta tags -->
 	<?php require('metatags.html') ?>
-	
+
 	<title>Mastermind</title>
-	
+
 	<link rel="stylesheet" href="build/css/style.css">
 	<link rel="import" href="https://www.polymer-project.org/1.0/components/paper-ripple/paper-ripple.html">
 
@@ -22,9 +22,9 @@ include('php/getHighscores.php');
 	<div id="board">
 		<div id="rows">
 			<!-- Rows where you can guess the code -->
-			<?php 
+			<?php
 			$attempt_rows = 12;
-			for ($i=0; $i < $attempt_rows; $i++) { 
+			for ($i=0; $i < $attempt_rows; $i++) {
 				echo "<div id=\"row_" . $i . "\" class=\"row\">";
 				echo "<div class=\"attempt_number\">" . ($attempt_rows - $i) . "</div>";
 				// Put the pin holes here
@@ -32,7 +32,7 @@ include('php/getHighscores.php');
 					echo "<div id=\"hole_" . $j . "\" class=\"hole\"></div>";
 				}
 				echo "<div class=\"little_holes\">";
-				for ($j=0; $j < 4; $j++) { 
+				for ($j=0; $j < 4; $j++) {
 					echo "<div id=\"little_hole_" . $j . "\" class=\"little hole\"></div>";
 				}
 				echo "</div>";
@@ -61,7 +61,7 @@ include('php/getHighscores.php');
 					</tr>
 				</thead>
 				<tbody>
-					<?php 
+					<?php
 					for ($i=1; $i <= sizeof($scores); $i++) {
 						echo "<tr>";
 						echo "<td>$i</td>";
@@ -77,8 +77,8 @@ include('php/getHighscores.php');
 			<!-- Color selection -->
 			<div id="colors">
 				<!-- Different colors you can choose -->
-				<?php 
-				for ($i=0; $i < 8; $i++) { 
+				<?php
+				for ($i=0; $i < 8; $i++) {
 					echo "<div id=\"color_" . $i . "\" class=\"color\"></div>";
 				}
 				 ?>
@@ -100,7 +100,7 @@ include('php/getHighscores.php');
 		</p>
 		<div id="upload_high_score">
 			<div class="group">
-				<input type="text" required id="nickname" maxlength="20" value="<?=$_COOKIE['nickname']?>">
+				<input type="text" required id="nickname" maxlength="20" value="<?=isset($_COOKIE['nickname']) ? $_COOKIE['nickname']:"" ?>">
 				<span class="highlight"></span>
 				<span class="bar"></span>
 				<label>Nickname</label>
@@ -115,7 +115,7 @@ include('php/getHighscores.php');
 			<paper-ripple fit></paper-ripple>
 		</div>
 	</div>
-	
+
 	<!-- Include scripts -->
 	<script src="build/js/script.js" type="text/javascript" charset="utf-8" async defer></script>
 </body>
